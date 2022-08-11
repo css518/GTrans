@@ -1,11 +1,13 @@
+# GTrans
+This repository contains data and code for our ASE 2022 paper "Code comment generation based on graph neural network enhanced transformer model for code understanding in open-source software ecosystems".
 We provide the log files while training and evaluating the models in ours-log-files directory. You can find the results and examples that we provided in our paper. 
 
-###Data:
+### Data:
 You can parse the original dataset to the graph format by [Parsers](https://github.com/CoderPat/structured-neural-summarization/tree/master/parsers).
 
 You can also get the processed data from [google drive](https://drive.google.com/drive/folders/17-fksV8qPFR3JRgz0t3UXN6dfyJ6FxZX?usp=sharing).
 
-###Training/Testing Models:
+### Training/Testing Models:
 
 ```
 $ cd scripts/DATASET_NAME
@@ -25,7 +27,7 @@ where, 0 means GPU_ID.
 - If GPU_ID is set to one specific number, only one GPU will be used.
 - If GPU_ID is set to multiple numbers (e.g., 0,1,2), then parallel computing will be used.
 
-###Generated log files
+### Generated log files
 While training and evaluating the models, a list of files are generated inside a `DATASET_NAME-tmp` directory. The files are as follows.
 - **MODEL_NAME.mdl**
   - Model file containing the parameters of the best model.
