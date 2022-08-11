@@ -1,0 +1,1 @@
+python graph2subtokengraph.py train/train.0.json.gz train/train.0.gz

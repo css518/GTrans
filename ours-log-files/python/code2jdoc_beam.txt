@@ -1,0 +1,117 @@
+03/29/2021 01:23:54 AM: [ COMMAND: ../../main/test.py --data_workers 10 --dataset_name python --data_dir ../../data/ --model_dir ../../python-tmp --model_name code2jdoc --dev_src test/code.original_subtoken --dev_tgt test/javadoc.original --dev_gnn test/test.0.gz --uncase True --max_examples -1 --max_src_len 400 --max_tgt_len 30 --test_batch_size 64 --beam_size 4 --n_best 1 --block_ngram_repeat 3 --stepwise_penalty False --coverage_penalty none --length_penalty none --beta 0 --gamma 0 --replace_unk ]
+03/29/2021 01:23:54 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:23:54 AM: [ Load and process data files ]
+03/29/2021 01:24:04 AM: [ Num dev examples = 18502 ]
+03/29/2021 01:24:04 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:24:04 AM: [ Loading model ../../python-tmp/code2jdoc.mdl ]
+03/29/2021 01:24:11 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:24:11 AM: [ Make data loaders ]
+03/29/2021 01:24:11 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:24:11 AM: [ CONFIG:
+{
+    "attn_type": "general",
+    "beam_size": 4,
+    "beta": 0.0,
+    "bidirection": true,
+    "block_ngram_repeat": 3,
+    "char_emsize": 16,
+    "code_tag_type": "subtoken",
+    "conditional_decoding": false,
+    "copy_attn": false,
+    "coverage_attn": false,
+    "coverage_penalty": "none",
+    "cuda": true,
+    "d_ff": 2048,
+    "d_k": 64,
+    "d_v": 64,
+    "data_dir": "../../data/",
+    "data_workers": 10,
+    "dataset_name": [
+        "python"
+    ],
+    "dev_gnn": [
+        "test/test.0.gz"
+    ],
+    "dev_gnn_files": [
+        "../../data/python/test/test.0.gz"
+    ],
+    "dev_src": [
+        "test/code.original_subtoken"
+    ],
+    "dev_src_files": [
+        "../../data/python/test/code.original_subtoken"
+    ],
+    "dev_src_tag": null,
+    "dev_src_tag_files": [
+        null
+    ],
+    "dev_tgt": [
+        "test/javadoc.original"
+    ],
+    "dev_tgt_files": [
+        "../../data/python/test/javadoc.original"
+    ],
+    "dropout": 0.2,
+    "dropout_emb": 0.2,
+    "dropout_rnn": 0.2,
+    "early_stop": 5,
+    "emsize": 300,
+    "filter_size": 5,
+    "fix_embeddings": true,
+    "force_copy": false,
+    "gamma": 0.0,
+    "grad_clipping": 5.0,
+    "ignore_when_blocking": [],
+    "layer_wise_attn": false,
+    "learning_rate": 0.001,
+    "length_penalty": "none",
+    "log_file": "../../python-tmp/code2jdoc_beam.txt",
+    "lr_decay": 0.99,
+    "max_characters_per_token": 30,
+    "max_examples": -1,
+    "max_relative_pos": 0,
+    "max_src_len": 400,
+    "max_tgt_len": 30,
+    "model_dir": "../../python-tmp",
+    "model_file": "../../python-tmp/code2jdoc.mdl",
+    "model_name": "code2jdoc",
+    "model_type": "rnn",
+    "momentum": 0,
+    "n_best": 1,
+    "n_characters": 260,
+    "nfilters": 100,
+    "nhid": 200,
+    "nlayers": 2,
+    "num_head": 8,
+    "only_generate": false,
+    "optimizer": "adam",
+    "parallel": false,
+    "pred_file": "../../python-tmp/code2jdoc_beam.json",
+    "random_seed": 1013,
+    "reload_decoder_state": null,
+    "replace_unk": true,
+    "reuse_copy_attn": false,
+    "review_attn": false,
+    "rnn_type": "LSTM",
+    "share_decoder_embeddings": false,
+    "sort_by_len": true,
+    "split_decoder": false,
+    "src_pos_emb": true,
+    "stepwise_penalty": false,
+    "test_batch_size": 64,
+    "tgt_pos_emb": true,
+    "trans_drop": 0.2,
+    "uncase": true,
+    "use_all_enc_layers": false,
+    "use_code_type": false,
+    "use_neg_dist": true,
+    "use_src_char": false,
+    "use_src_word": true,
+    "use_tgt_char": false,
+    "use_tgt_word": true,
+    "verbose": false,
+    "warmup_epochs": 0,
+    "warmup_steps": 10000,
+    "weight_decay": 0
+} ]
+03/29/2021 01:40:43 AM: [ beam evaluation official: bleu = 33.05 | rouge_l = 47.47 | meteor = 20.47 | Precision = 52.16 | Recall = 49.41 | F1 = 49.04 | examples = 18502 | test time = 992.25 (s) ]

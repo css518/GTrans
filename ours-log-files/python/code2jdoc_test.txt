@@ -1,0 +1,120 @@
+03/29/2021 01:16:58 AM: [ COMMAND: ../../main/train.py --only_test True --data_workers 10 --dataset_name python --data_dir ../../data/ --model_dir ../../python-tmp --model_name code2jdoc --dev_src test/code.original_subtoken --dev_tgt test/javadoc.original --dev_gnn test/test.0.gz --uncase True --max_src_len 400 --max_tgt_len 30 --max_examples -1 --test_batch_size 64 ]
+03/29/2021 01:16:58 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:16:58 AM: [ Load and process data files ]
+03/29/2021 01:17:08 AM: [ Num dev examples = 18502 ]
+03/29/2021 01:17:08 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:17:08 AM: [ Loading model ../../python-tmp/code2jdoc.mdl ]
+03/29/2021 01:17:20 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:17:20 AM: [ Make data loaders ]
+03/29/2021 01:17:20 AM: [ ---------------------------------------------------------------------------------------------------- ]
+03/29/2021 01:17:20 AM: [ CONFIG:
+{
+    "attn_type": "general",
+    "batch_size": 32,
+    "bidirection": true,
+    "char_emsize": 16,
+    "checkpoint": false,
+    "code_tag_type": "subtoken",
+    "conditional_decoding": false,
+    "copy_attn": false,
+    "coverage_attn": false,
+    "cuda": true,
+    "d_ff": 2048,
+    "d_k": 64,
+    "d_v": 64,
+    "data_dir": "../../data/",
+    "data_workers": 10,
+    "dataset_name": [
+        "python"
+    ],
+    "dev_gnn": [
+        "test/test.0.gz"
+    ],
+    "dev_gnn_files": [
+        "../../data/python/test/test.0.gz"
+    ],
+    "dev_src": [
+        "test/code.original_subtoken"
+    ],
+    "dev_src_files": [
+        "../../data/python/test/code.original_subtoken"
+    ],
+    "dev_src_tag": null,
+    "dev_src_tag_files": [
+        null
+    ],
+    "dev_tgt": [
+        "test/javadoc.original"
+    ],
+    "dev_tgt_files": [
+        "../../data/python/test/javadoc.original"
+    ],
+    "display_iter": 25,
+    "dropout": 0.2,
+    "dropout_emb": 0.2,
+    "dropout_rnn": 0.2,
+    "early_stop": 5,
+    "emsize": 300,
+    "filter_size": 5,
+    "fix_embeddings": false,
+    "force_copy": false,
+    "grad_clipping": 5.0,
+    "layer_wise_attn": false,
+    "learning_rate": 0.001,
+    "log_file": "../../python-tmp/code2jdoc_test.txt",
+    "lr_decay": 0.99,
+    "max_characters_per_token": 30,
+    "max_examples": -1,
+    "max_relative_pos": 0,
+    "max_src_len": 400,
+    "max_tgt_len": 30,
+    "model_dir": "../../python-tmp",
+    "model_file": "../../python-tmp/code2jdoc.mdl",
+    "model_name": "code2jdoc",
+    "model_type": "rnn",
+    "momentum": 0,
+    "n_characters": 260,
+    "nfilters": 100,
+    "nhid": 200,
+    "nlayers": 2,
+    "num_epochs": 40,
+    "num_head": 8,
+    "only_test": true,
+    "optimizer": "adam",
+    "parallel": false,
+    "pred_file": "../../python-tmp/code2jdoc_test.json",
+    "pretrained": null,
+    "print_copy_info": false,
+    "print_one_target": false,
+    "random_seed": 1013,
+    "reload_decoder_state": null,
+    "reuse_copy_attn": false,
+    "review_attn": false,
+    "rnn_type": "LSTM",
+    "share_decoder_embeddings": false,
+    "sort_by_len": true,
+    "split_decoder": false,
+    "src_pos_emb": true,
+    "src_vocab_size": null,
+    "test_batch_size": 64,
+    "tgt_pos_emb": true,
+    "tgt_vocab_size": null,
+    "train_gnn": null,
+    "train_src": null,
+    "train_src_tag": null,
+    "train_tgt": null,
+    "trans_drop": 0.2,
+    "uncase": true,
+    "use_all_enc_layers": false,
+    "use_code_type": false,
+    "use_neg_dist": true,
+    "use_src_char": false,
+    "use_src_word": true,
+    "use_tgt_char": false,
+    "use_tgt_word": true,
+    "valid_metric": "bleu",
+    "warmup_epochs": 0,
+    "warmup_steps": 10000,
+    "weight_decay": 0
+} ]
+03/29/2021 01:23:44 AM: [ test valid official: bleu = 32.49 | rouge_l = 47.21 | meteor = 20.59 | Precision = 50.56 | Recall = 50.48 | F1 = 48.79 | examples = 18502 | test time = 383.48 (s) ]

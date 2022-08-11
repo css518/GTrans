@@ -1,0 +1,7 @@
+numpy
+tqdm
+nltk
+prettytable
+torch==1.4.0
+docopt
+xmltodict

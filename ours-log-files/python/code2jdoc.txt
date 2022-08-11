@@ -1,0 +1,987 @@
+03/26/2021 05:12:53 PM: [ COMMAND: ../../main/train.py --data_workers 10 --dataset_name python --data_dir ../../data/ --model_dir ../../python-tmp --model_name code2jdoc --train_src train/code.original_subtoken --train_tgt train/javadoc.original --train_gnn train/train.0.gz --dev_src dev/code.original_subtoken --dev_tgt dev/javadoc.original --dev_gnn dev/dev.0.gz --uncase True --use_src_word True --use_src_char False --use_tgt_word True --use_tgt_char False --max_src_len 400 --max_tgt_len 30 --emsize 512 --fix_embeddings False --src_vocab_size 50000 --tgt_vocab_size 30000 --share_decoder_embeddings True --max_examples -1 --batch_size 32 --test_batch_size 64 --num_epochs 200 --model_type transformer --num_head 8 --d_k 64 --d_v 64 --d_ff 2048 --src_pos_emb False --tgt_pos_emb True --max_relative_pos 16 --use_neg_dist True --nlayers 6 --trans_drop 0.2 --dropout_emb 0.2 --dropout 0.2 --copy_attn True --early_stop 20 --warmup_steps 0 --optimizer adam --learning_rate 0.0001 --lr_decay 0.99 --valid_metric bleu --checkpoint True ]
+03/26/2021 05:12:53 PM: [ ---------------------------------------------------------------------------------------------------- ]
+03/26/2021 05:12:53 PM: [ Load and process data files ]
+03/26/2021 05:13:24 PM: [ Num train examples = 55538 ]
+03/26/2021 05:13:24 PM: [ Dataset weights = {1: 1.0} ]
+03/26/2021 05:13:38 PM: [ Num dev examples = 18505 ]
+03/26/2021 05:13:38 PM: [ ---------------------------------------------------------------------------------------------------- ]
+03/26/2021 05:13:38 PM: [ Training model from scratch... ]
+03/26/2021 05:13:38 PM: [ ---------------------------------------------------------------------------------------------------- ]
+03/26/2021 05:13:38 PM: [ Build word dictionary ]
+03/26/2021 05:13:42 PM: [ Num words in graph = 188405 ]
+03/26/2021 05:13:42 PM: [ Num words in source = 50000 and target = 30000 ]
+03/26/2021 05:13:44 PM: [ Trainable #parameters [encoder-decoder] 50.5M [total] 169M ]
+03/26/2021 05:13:44 PM: [ Breakdown of the trainable paramters
++------------------------------------------------------------------------------+---------------+----------+
+| Layer Name                                                                   |  Output Shape |  Param # |
++------------------------------------------------------------------------------+---------------+----------+
+| gnn.in_list.0.weight                                                         |    [512, 512] |   262144 |
+| gnn.in_list.0.bias                                                           |         [512] |      512 |
+| gnn.in_list.1.weight                                                         |    [512, 512] |   262144 |
+| gnn.in_list.1.bias                                                           |         [512] |      512 |
+| gnn.in_list.2.weight                                                         |    [512, 512] |   262144 |
+| gnn.in_list.2.bias                                                           |         [512] |      512 |
+| gnn.in_list.3.weight                                                         |    [512, 512] |   262144 |
+| gnn.in_list.3.bias                                                           |         [512] |      512 |
+| gnn.out_list.0.weight                                                        |    [512, 512] |   262144 |
+| gnn.out_list.0.bias                                                          |         [512] |      512 |
+| gnn.out_list.1.weight                                                        |    [512, 512] |   262144 |
+| gnn.out_list.1.bias                                                          |         [512] |      512 |
+| gnn.out_list.2.weight                                                        |    [512, 512] |   262144 |
+| gnn.out_list.2.bias                                                          |         [512] |      512 |
+| gnn.out_list.3.weight                                                        |    [512, 512] |   262144 |
+| gnn.out_list.3.bias                                                          |         [512] |      512 |
+| gnn.propogator.reset_gate.0.weight                                           |   [512, 1536] |   786432 |
+| gnn.propogator.reset_gate.0.bias                                             |         [512] |      512 |
+| gnn.propogator.update_gate.0.weight                                          |   [512, 1536] |   786432 |
+| gnn.propogator.update_gate.0.bias                                            |         [512] |      512 |
+| gnn.propogator.tansform.0.weight                                             |   [512, 1536] |   786432 |
+| gnn.propogator.tansform.0.bias                                               |         [512] |      512 |
+| gnn.out.0.weight                                                             |   [512, 1024] |   524288 |
+| gnn.out.0.bias                                                               |         [512] |      512 |
+| embedder.gnn_word_embeddings.make_embedding.emb_luts.0.weight                | [188405, 512] | 96463360 |
+| embedder.tgt_word_embeddings.make_embedding.emb_luts.0.weight                |  [30000, 512] | 15360000 |
+| embedder.tgt_pos_embeddings.weight                                           |     [32, 512] |    16384 |
+| fuse.weight                                                                  |   [512, 1024] |   524288 |
+| fuse.bias                                                                    |         [512] |      512 |
+| encoder.transformer.layer.0.attention.key.weight                             |    [512, 512] |   262144 |
+| encoder.transformer.layer.0.attention.key.bias                               |         [512] |      512 |
+| encoder.transformer.layer.0.attention.query.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.0.attention.query.bias                             |         [512] |      512 |
+| encoder.transformer.layer.0.attention.value.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.0.attention.value.bias                             |         [512] |      512 |
+| encoder.transformer.layer.0.attention.output.weight                          |    [512, 512] |   262144 |
+| encoder.transformer.layer.0.attention.output.bias                            |         [512] |      512 |
+| encoder.transformer.layer.0.attention.relative_positions_embeddings_k.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.0.attention.relative_positions_embeddings_v.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.0.layer_norm.weight                                |         [512] |      512 |
+| encoder.transformer.layer.0.layer_norm.bias                                  |         [512] |      512 |
+| encoder.transformer.layer.0.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| encoder.transformer.layer.0.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| encoder.transformer.layer.0.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| encoder.transformer.layer.0.feed_forward.output.bias                         |         [512] |      512 |
+| encoder.transformer.layer.0.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| encoder.transformer.layer.0.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| encoder.transformer.layer.1.attention.key.weight                             |    [512, 512] |   262144 |
+| encoder.transformer.layer.1.attention.key.bias                               |         [512] |      512 |
+| encoder.transformer.layer.1.attention.query.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.1.attention.query.bias                             |         [512] |      512 |
+| encoder.transformer.layer.1.attention.value.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.1.attention.value.bias                             |         [512] |      512 |
+| encoder.transformer.layer.1.attention.output.weight                          |    [512, 512] |   262144 |
+| encoder.transformer.layer.1.attention.output.bias                            |         [512] |      512 |
+| encoder.transformer.layer.1.attention.relative_positions_embeddings_k.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.1.attention.relative_positions_embeddings_v.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.1.layer_norm.weight                                |         [512] |      512 |
+| encoder.transformer.layer.1.layer_norm.bias                                  |         [512] |      512 |
+| encoder.transformer.layer.1.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| encoder.transformer.layer.1.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| encoder.transformer.layer.1.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| encoder.transformer.layer.1.feed_forward.output.bias                         |         [512] |      512 |
+| encoder.transformer.layer.1.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| encoder.transformer.layer.1.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| encoder.transformer.layer.2.attention.key.weight                             |    [512, 512] |   262144 |
+| encoder.transformer.layer.2.attention.key.bias                               |         [512] |      512 |
+| encoder.transformer.layer.2.attention.query.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.2.attention.query.bias                             |         [512] |      512 |
+| encoder.transformer.layer.2.attention.value.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.2.attention.value.bias                             |         [512] |      512 |
+| encoder.transformer.layer.2.attention.output.weight                          |    [512, 512] |   262144 |
+| encoder.transformer.layer.2.attention.output.bias                            |         [512] |      512 |
+| encoder.transformer.layer.2.attention.relative_positions_embeddings_k.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.2.attention.relative_positions_embeddings_v.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.2.layer_norm.weight                                |         [512] |      512 |
+| encoder.transformer.layer.2.layer_norm.bias                                  |         [512] |      512 |
+| encoder.transformer.layer.2.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| encoder.transformer.layer.2.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| encoder.transformer.layer.2.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| encoder.transformer.layer.2.feed_forward.output.bias                         |         [512] |      512 |
+| encoder.transformer.layer.2.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| encoder.transformer.layer.2.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| encoder.transformer.layer.3.attention.key.weight                             |    [512, 512] |   262144 |
+| encoder.transformer.layer.3.attention.key.bias                               |         [512] |      512 |
+| encoder.transformer.layer.3.attention.query.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.3.attention.query.bias                             |         [512] |      512 |
+| encoder.transformer.layer.3.attention.value.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.3.attention.value.bias                             |         [512] |      512 |
+| encoder.transformer.layer.3.attention.output.weight                          |    [512, 512] |   262144 |
+| encoder.transformer.layer.3.attention.output.bias                            |         [512] |      512 |
+| encoder.transformer.layer.3.attention.relative_positions_embeddings_k.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.3.attention.relative_positions_embeddings_v.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.3.layer_norm.weight                                |         [512] |      512 |
+| encoder.transformer.layer.3.layer_norm.bias                                  |         [512] |      512 |
+| encoder.transformer.layer.3.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| encoder.transformer.layer.3.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| encoder.transformer.layer.3.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| encoder.transformer.layer.3.feed_forward.output.bias                         |         [512] |      512 |
+| encoder.transformer.layer.3.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| encoder.transformer.layer.3.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| encoder.transformer.layer.4.attention.key.weight                             |    [512, 512] |   262144 |
+| encoder.transformer.layer.4.attention.key.bias                               |         [512] |      512 |
+| encoder.transformer.layer.4.attention.query.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.4.attention.query.bias                             |         [512] |      512 |
+| encoder.transformer.layer.4.attention.value.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.4.attention.value.bias                             |         [512] |      512 |
+| encoder.transformer.layer.4.attention.output.weight                          |    [512, 512] |   262144 |
+| encoder.transformer.layer.4.attention.output.bias                            |         [512] |      512 |
+| encoder.transformer.layer.4.attention.relative_positions_embeddings_k.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.4.attention.relative_positions_embeddings_v.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.4.layer_norm.weight                                |         [512] |      512 |
+| encoder.transformer.layer.4.layer_norm.bias                                  |         [512] |      512 |
+| encoder.transformer.layer.4.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| encoder.transformer.layer.4.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| encoder.transformer.layer.4.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| encoder.transformer.layer.4.feed_forward.output.bias                         |         [512] |      512 |
+| encoder.transformer.layer.4.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| encoder.transformer.layer.4.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| encoder.transformer.layer.5.attention.key.weight                             |    [512, 512] |   262144 |
+| encoder.transformer.layer.5.attention.key.bias                               |         [512] |      512 |
+| encoder.transformer.layer.5.attention.query.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.5.attention.query.bias                             |         [512] |      512 |
+| encoder.transformer.layer.5.attention.value.weight                           |    [512, 512] |   262144 |
+| encoder.transformer.layer.5.attention.value.bias                             |         [512] |      512 |
+| encoder.transformer.layer.5.attention.output.weight                          |    [512, 512] |   262144 |
+| encoder.transformer.layer.5.attention.output.bias                            |         [512] |      512 |
+| encoder.transformer.layer.5.attention.relative_positions_embeddings_k.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.5.attention.relative_positions_embeddings_v.weight |      [33, 64] |     2112 |
+| encoder.transformer.layer.5.layer_norm.weight                                |         [512] |      512 |
+| encoder.transformer.layer.5.layer_norm.bias                                  |         [512] |      512 |
+| encoder.transformer.layer.5.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| encoder.transformer.layer.5.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| encoder.transformer.layer.5.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| encoder.transformer.layer.5.feed_forward.output.bias                         |         [512] |      512 |
+| encoder.transformer.layer.5.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| encoder.transformer.layer.5.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| decoder.transformer.layer.0.attention.key.weight                             |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.attention.key.bias                               |         [512] |      512 |
+| decoder.transformer.layer.0.attention.query.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.attention.query.bias                             |         [512] |      512 |
+| decoder.transformer.layer.0.attention.value.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.attention.value.bias                             |         [512] |      512 |
+| decoder.transformer.layer.0.attention.output.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.attention.output.bias                            |         [512] |      512 |
+| decoder.transformer.layer.0.layer_norm.weight                                |         [512] |      512 |
+| decoder.transformer.layer.0.layer_norm.bias                                  |         [512] |      512 |
+| decoder.transformer.layer.0.context_attn.key.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.context_attn.key.bias                            |         [512] |      512 |
+| decoder.transformer.layer.0.context_attn.query.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.context_attn.query.bias                          |         [512] |      512 |
+| decoder.transformer.layer.0.context_attn.value.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.context_attn.value.bias                          |         [512] |      512 |
+| decoder.transformer.layer.0.context_attn.output.weight                       |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.context_attn.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.0.layer_norm_2.weight                              |         [512] |      512 |
+| decoder.transformer.layer.0.layer_norm_2.bias                                |         [512] |      512 |
+| decoder.transformer.layer.0.gnn_attn.key.weight                              |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.gnn_attn.key.bias                                |         [512] |      512 |
+| decoder.transformer.layer.0.gnn_attn.query.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.gnn_attn.query.bias                              |         [512] |      512 |
+| decoder.transformer.layer.0.gnn_attn.value.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.gnn_attn.value.bias                              |         [512] |      512 |
+| decoder.transformer.layer.0.gnn_attn.output.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.0.gnn_attn.output.bias                             |         [512] |      512 |
+| decoder.transformer.layer.0.layer_norm_3.weight                              |         [512] |      512 |
+| decoder.transformer.layer.0.layer_norm_3.bias                                |         [512] |      512 |
+| decoder.transformer.layer.0.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| decoder.transformer.layer.0.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| decoder.transformer.layer.0.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| decoder.transformer.layer.0.feed_forward.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.0.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| decoder.transformer.layer.0.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| decoder.transformer.layer.1.attention.key.weight                             |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.attention.key.bias                               |         [512] |      512 |
+| decoder.transformer.layer.1.attention.query.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.attention.query.bias                             |         [512] |      512 |
+| decoder.transformer.layer.1.attention.value.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.attention.value.bias                             |         [512] |      512 |
+| decoder.transformer.layer.1.attention.output.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.attention.output.bias                            |         [512] |      512 |
+| decoder.transformer.layer.1.layer_norm.weight                                |         [512] |      512 |
+| decoder.transformer.layer.1.layer_norm.bias                                  |         [512] |      512 |
+| decoder.transformer.layer.1.context_attn.key.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.context_attn.key.bias                            |         [512] |      512 |
+| decoder.transformer.layer.1.context_attn.query.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.context_attn.query.bias                          |         [512] |      512 |
+| decoder.transformer.layer.1.context_attn.value.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.context_attn.value.bias                          |         [512] |      512 |
+| decoder.transformer.layer.1.context_attn.output.weight                       |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.context_attn.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.1.layer_norm_2.weight                              |         [512] |      512 |
+| decoder.transformer.layer.1.layer_norm_2.bias                                |         [512] |      512 |
+| decoder.transformer.layer.1.gnn_attn.key.weight                              |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.gnn_attn.key.bias                                |         [512] |      512 |
+| decoder.transformer.layer.1.gnn_attn.query.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.gnn_attn.query.bias                              |         [512] |      512 |
+| decoder.transformer.layer.1.gnn_attn.value.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.gnn_attn.value.bias                              |         [512] |      512 |
+| decoder.transformer.layer.1.gnn_attn.output.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.1.gnn_attn.output.bias                             |         [512] |      512 |
+| decoder.transformer.layer.1.layer_norm_3.weight                              |         [512] |      512 |
+| decoder.transformer.layer.1.layer_norm_3.bias                                |         [512] |      512 |
+| decoder.transformer.layer.1.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| decoder.transformer.layer.1.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| decoder.transformer.layer.1.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| decoder.transformer.layer.1.feed_forward.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.1.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| decoder.transformer.layer.1.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| decoder.transformer.layer.2.attention.key.weight                             |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.attention.key.bias                               |         [512] |      512 |
+| decoder.transformer.layer.2.attention.query.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.attention.query.bias                             |         [512] |      512 |
+| decoder.transformer.layer.2.attention.value.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.attention.value.bias                             |         [512] |      512 |
+| decoder.transformer.layer.2.attention.output.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.attention.output.bias                            |         [512] |      512 |
+| decoder.transformer.layer.2.layer_norm.weight                                |         [512] |      512 |
+| decoder.transformer.layer.2.layer_norm.bias                                  |         [512] |      512 |
+| decoder.transformer.layer.2.context_attn.key.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.context_attn.key.bias                            |         [512] |      512 |
+| decoder.transformer.layer.2.context_attn.query.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.context_attn.query.bias                          |         [512] |      512 |
+| decoder.transformer.layer.2.context_attn.value.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.context_attn.value.bias                          |         [512] |      512 |
+| decoder.transformer.layer.2.context_attn.output.weight                       |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.context_attn.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.2.layer_norm_2.weight                              |         [512] |      512 |
+| decoder.transformer.layer.2.layer_norm_2.bias                                |         [512] |      512 |
+| decoder.transformer.layer.2.gnn_attn.key.weight                              |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.gnn_attn.key.bias                                |         [512] |      512 |
+| decoder.transformer.layer.2.gnn_attn.query.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.gnn_attn.query.bias                              |         [512] |      512 |
+| decoder.transformer.layer.2.gnn_attn.value.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.gnn_attn.value.bias                              |         [512] |      512 |
+| decoder.transformer.layer.2.gnn_attn.output.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.2.gnn_attn.output.bias                             |         [512] |      512 |
+| decoder.transformer.layer.2.layer_norm_3.weight                              |         [512] |      512 |
+| decoder.transformer.layer.2.layer_norm_3.bias                                |         [512] |      512 |
+| decoder.transformer.layer.2.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| decoder.transformer.layer.2.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| decoder.transformer.layer.2.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| decoder.transformer.layer.2.feed_forward.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.2.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| decoder.transformer.layer.2.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| decoder.transformer.layer.3.attention.key.weight                             |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.attention.key.bias                               |         [512] |      512 |
+| decoder.transformer.layer.3.attention.query.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.attention.query.bias                             |         [512] |      512 |
+| decoder.transformer.layer.3.attention.value.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.attention.value.bias                             |         [512] |      512 |
+| decoder.transformer.layer.3.attention.output.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.attention.output.bias                            |         [512] |      512 |
+| decoder.transformer.layer.3.layer_norm.weight                                |         [512] |      512 |
+| decoder.transformer.layer.3.layer_norm.bias                                  |         [512] |      512 |
+| decoder.transformer.layer.3.context_attn.key.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.context_attn.key.bias                            |         [512] |      512 |
+| decoder.transformer.layer.3.context_attn.query.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.context_attn.query.bias                          |         [512] |      512 |
+| decoder.transformer.layer.3.context_attn.value.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.context_attn.value.bias                          |         [512] |      512 |
+| decoder.transformer.layer.3.context_attn.output.weight                       |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.context_attn.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.3.layer_norm_2.weight                              |         [512] |      512 |
+| decoder.transformer.layer.3.layer_norm_2.bias                                |         [512] |      512 |
+| decoder.transformer.layer.3.gnn_attn.key.weight                              |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.gnn_attn.key.bias                                |         [512] |      512 |
+| decoder.transformer.layer.3.gnn_attn.query.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.gnn_attn.query.bias                              |         [512] |      512 |
+| decoder.transformer.layer.3.gnn_attn.value.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.gnn_attn.value.bias                              |         [512] |      512 |
+| decoder.transformer.layer.3.gnn_attn.output.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.3.gnn_attn.output.bias                             |         [512] |      512 |
+| decoder.transformer.layer.3.layer_norm_3.weight                              |         [512] |      512 |
+| decoder.transformer.layer.3.layer_norm_3.bias                                |         [512] |      512 |
+| decoder.transformer.layer.3.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| decoder.transformer.layer.3.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| decoder.transformer.layer.3.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| decoder.transformer.layer.3.feed_forward.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.3.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| decoder.transformer.layer.3.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| decoder.transformer.layer.4.attention.key.weight                             |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.attention.key.bias                               |         [512] |      512 |
+| decoder.transformer.layer.4.attention.query.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.attention.query.bias                             |         [512] |      512 |
+| decoder.transformer.layer.4.attention.value.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.attention.value.bias                             |         [512] |      512 |
+| decoder.transformer.layer.4.attention.output.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.attention.output.bias                            |         [512] |      512 |
+| decoder.transformer.layer.4.layer_norm.weight                                |         [512] |      512 |
+| decoder.transformer.layer.4.layer_norm.bias                                  |         [512] |      512 |
+| decoder.transformer.layer.4.context_attn.key.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.context_attn.key.bias                            |         [512] |      512 |
+| decoder.transformer.layer.4.context_attn.query.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.context_attn.query.bias                          |         [512] |      512 |
+| decoder.transformer.layer.4.context_attn.value.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.context_attn.value.bias                          |         [512] |      512 |
+| decoder.transformer.layer.4.context_attn.output.weight                       |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.context_attn.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.4.layer_norm_2.weight                              |         [512] |      512 |
+| decoder.transformer.layer.4.layer_norm_2.bias                                |         [512] |      512 |
+| decoder.transformer.layer.4.gnn_attn.key.weight                              |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.gnn_attn.key.bias                                |         [512] |      512 |
+| decoder.transformer.layer.4.gnn_attn.query.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.gnn_attn.query.bias                              |         [512] |      512 |
+| decoder.transformer.layer.4.gnn_attn.value.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.gnn_attn.value.bias                              |         [512] |      512 |
+| decoder.transformer.layer.4.gnn_attn.output.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.4.gnn_attn.output.bias                             |         [512] |      512 |
+| decoder.transformer.layer.4.layer_norm_3.weight                              |         [512] |      512 |
+| decoder.transformer.layer.4.layer_norm_3.bias                                |         [512] |      512 |
+| decoder.transformer.layer.4.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| decoder.transformer.layer.4.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| decoder.transformer.layer.4.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| decoder.transformer.layer.4.feed_forward.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.4.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| decoder.transformer.layer.4.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| decoder.transformer.layer.5.attention.key.weight                             |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.attention.key.bias                               |         [512] |      512 |
+| decoder.transformer.layer.5.attention.query.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.attention.query.bias                             |         [512] |      512 |
+| decoder.transformer.layer.5.attention.value.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.attention.value.bias                             |         [512] |      512 |
+| decoder.transformer.layer.5.attention.output.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.attention.output.bias                            |         [512] |      512 |
+| decoder.transformer.layer.5.layer_norm.weight                                |         [512] |      512 |
+| decoder.transformer.layer.5.layer_norm.bias                                  |         [512] |      512 |
+| decoder.transformer.layer.5.context_attn.key.weight                          |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.context_attn.key.bias                            |         [512] |      512 |
+| decoder.transformer.layer.5.context_attn.query.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.context_attn.query.bias                          |         [512] |      512 |
+| decoder.transformer.layer.5.context_attn.value.weight                        |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.context_attn.value.bias                          |         [512] |      512 |
+| decoder.transformer.layer.5.context_attn.output.weight                       |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.context_attn.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.5.layer_norm_2.weight                              |         [512] |      512 |
+| decoder.transformer.layer.5.layer_norm_2.bias                                |         [512] |      512 |
+| decoder.transformer.layer.5.gnn_attn.key.weight                              |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.gnn_attn.key.bias                                |         [512] |      512 |
+| decoder.transformer.layer.5.gnn_attn.query.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.gnn_attn.query.bias                              |         [512] |      512 |
+| decoder.transformer.layer.5.gnn_attn.value.weight                            |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.gnn_attn.value.bias                              |         [512] |      512 |
+| decoder.transformer.layer.5.gnn_attn.output.weight                           |    [512, 512] |   262144 |
+| decoder.transformer.layer.5.gnn_attn.output.bias                             |         [512] |      512 |
+| decoder.transformer.layer.5.layer_norm_3.weight                              |         [512] |      512 |
+| decoder.transformer.layer.5.layer_norm_3.bias                                |         [512] |      512 |
+| decoder.transformer.layer.5.feed_forward.intermediate.weight                 |   [2048, 512] |  1048576 |
+| decoder.transformer.layer.5.feed_forward.intermediate.bias                   |        [2048] |     2048 |
+| decoder.transformer.layer.5.feed_forward.output.weight                       |   [512, 2048] |  1048576 |
+| decoder.transformer.layer.5.feed_forward.output.bias                         |         [512] |      512 |
+| decoder.transformer.layer.5.feed_forward.layer_norm.weight                   |         [512] |      512 |
+| decoder.transformer.layer.5.feed_forward.layer_norm.bias                     |         [512] |      512 |
+| generator.bias                                                               |       [30000] |    30000 |
+| copy_attn.linear_in.weight                                                   |    [512, 512] |   262144 |
+| copy_attn.linear_out.weight                                                  |   [512, 1024] |   524288 |
+| copy_generator.linear_copy.weight                                            |      [1, 512] |      512 |
+| copy_generator.linear_copy.bias                                              |           [1] |        1 |
++------------------------------------------------------------------------------+---------------+----------+ ]
+03/26/2021 05:13:48 PM: [ ---------------------------------------------------------------------------------------------------- ]
+03/26/2021 05:13:48 PM: [ Make data loaders ]
+03/26/2021 05:13:49 PM: [ ---------------------------------------------------------------------------------------------------- ]
+03/26/2021 05:13:49 PM: [ CONFIG:
+{
+    "attn_type": "general",
+    "batch_size": 32,
+    "bidirection": true,
+    "char_emsize": 16,
+    "checkpoint": true,
+    "code_tag_type": "subtoken",
+    "conditional_decoding": false,
+    "copy_attn": true,
+    "coverage_attn": false,
+    "cuda": true,
+    "d_ff": 2048,
+    "d_k": 64,
+    "d_v": 64,
+    "data_dir": "../../data/",
+    "data_workers": 10,
+    "dataset_name": [
+        "python"
+    ],
+    "dataset_weights": {
+        "1": 1.0
+    },
+    "dev_gnn": [
+        "dev/dev.0.gz"
+    ],
+    "dev_gnn_files": [
+        "../../data/python/dev/dev.0.gz"
+    ],
+    "dev_src": [
+        "dev/code.original_subtoken"
+    ],
+    "dev_src_files": [
+        "../../data/python/dev/code.original_subtoken"
+    ],
+    "dev_src_tag": null,
+    "dev_src_tag_files": [
+        null
+    ],
+    "dev_tgt": [
+        "dev/javadoc.original"
+    ],
+    "dev_tgt_files": [
+        "../../data/python/dev/javadoc.original"
+    ],
+    "display_iter": 25,
+    "dropout": 0.2,
+    "dropout_emb": 0.2,
+    "dropout_rnn": 0.2,
+    "early_stop": 20,
+    "emsize": 512,
+    "filter_size": 5,
+    "fix_embeddings": false,
+    "force_copy": false,
+    "grad_clipping": 5.0,
+    "layer_wise_attn": false,
+    "learning_rate": 0.0001,
+    "log_file": "../../python-tmp/code2jdoc.txt",
+    "lr_decay": 0.99,
+    "max_characters_per_token": 30,
+    "max_examples": -1,
+    "max_relative_pos": [
+        16
+    ],
+    "max_src_len": 400,
+    "max_tgt_len": 30,
+    "model_dir": "../../python-tmp",
+    "model_file": "../../python-tmp/code2jdoc.mdl",
+    "model_name": "code2jdoc",
+    "model_type": "transformer",
+    "momentum": 0,
+    "n_characters": 260,
+    "nfilters": 100,
+    "nhid": 200,
+    "nlayers": 6,
+    "num_epochs": 200,
+    "num_head": 8,
+    "num_train_examples": 55538,
+    "only_test": false,
+    "optimizer": "adam",
+    "parallel": false,
+    "pred_file": "../../python-tmp/code2jdoc.json",
+    "pretrained": null,
+    "print_copy_info": false,
+    "print_one_target": false,
+    "random_seed": 1013,
+    "reload_decoder_state": null,
+    "reuse_copy_attn": false,
+    "review_attn": false,
+    "rnn_type": "LSTM",
+    "share_decoder_embeddings": true,
+    "sort_by_len": true,
+    "split_decoder": false,
+    "src_pos_emb": false,
+    "src_vocab_size": 50000,
+    "test_batch_size": 64,
+    "tgt_pos_emb": true,
+    "tgt_vocab_size": 30000,
+    "train_gnn": [
+        "train/train.0.gz"
+    ],
+    "train_gnn_files": [
+        "../../data/python/train/train.0.gz"
+    ],
+    "train_src": [
+        "train/code.original_subtoken"
+    ],
+    "train_src_files": [
+        "../../data/python/train/code.original_subtoken"
+    ],
+    "train_src_tag": null,
+    "train_src_tag_files": [
+        null
+    ],
+    "train_tgt": [
+        "train/javadoc.original"
+    ],
+    "train_tgt_files": [
+        "../../data/python/train/javadoc.original"
+    ],
+    "trans_drop": 0.2,
+    "uncase": true,
+    "use_all_enc_layers": false,
+    "use_code_type": false,
+    "use_neg_dist": true,
+    "use_src_char": false,
+    "use_src_word": true,
+    "use_tgt_char": false,
+    "use_tgt_word": true,
+    "valid_metric": "bleu",
+    "warmup_epochs": 0,
+    "warmup_steps": 0,
+    "weight_decay": 0
+} ]
+03/26/2021 05:13:49 PM: [ ---------------------------------------------------------------------------------------------------- ]
+03/26/2021 05:13:49 PM: [ Starting training... ]
+03/26/2021 05:25:06 PM: [ train: Epoch 1 | perplexity = 22026.47 | ml_loss = 320.04 | Time for epoch = 677.82 (s) ]
+03/26/2021 05:31:26 PM: [ dev valid official: Epoch = 1 | bleu = 4.81 | rouge_l = 12.71 | Precision = 7.91 | Recall = 29.47 | F1 = 12.04 | examples = 18505 | valid time = 376.04 (s) ]
+03/26/2021 05:31:26 PM: [ Best valid: bleu = 4.81 (epoch 1, 1736 updates) ]
+03/26/2021 05:42:16 PM: [ train: Epoch 2 | perplexity = 20633.96 | ml_loss = 218.35 | Time for epoch = 646.64 (s) ]
+03/26/2021 05:49:03 PM: [ dev valid official: Epoch = 2 | bleu = 15.69 | rouge_l = 30.40 | Precision = 36.93 | Recall = 31.76 | F1 = 31.71 | examples = 18505 | valid time = 402.41 (s) ]
+03/26/2021 05:49:03 PM: [ Best valid: bleu = 15.69 (epoch 2, 3472 updates) ]
+03/26/2021 06:00:51 PM: [ train: Epoch 3 | perplexity = 2303.23 | ml_loss = 76.38 | Time for epoch = 701.54 (s) ]
+03/26/2021 06:06:59 PM: [ dev valid official: Epoch = 3 | bleu = 17.07 | rouge_l = 33.14 | Precision = 40.84 | Recall = 34.42 | F1 = 34.94 | examples = 18505 | valid time = 363.47 (s) ]
+03/26/2021 06:06:59 PM: [ Best valid: bleu = 17.07 (epoch 3, 5208 updates) ]
+03/26/2021 06:17:51 PM: [ train: Epoch 4 | perplexity = 214.30 | ml_loss = 55.89 | Time for epoch = 648.49 (s) ]
+03/26/2021 06:24:16 PM: [ dev valid official: Epoch = 4 | bleu = 17.45 | rouge_l = 34.21 | Precision = 43.70 | Recall = 35.41 | F1 = 36.22 | examples = 18505 | valid time = 374.33 (s) ]
+03/26/2021 06:24:16 PM: [ Best valid: bleu = 17.45 (epoch 4, 6944 updates) ]
+03/26/2021 06:34:31 PM: [ train: Epoch 5 | perplexity = 82.84 | ml_loss = 46.58 | Time for epoch = 612.04 (s) ]
+03/26/2021 06:40:38 PM: [ dev valid official: Epoch = 5 | bleu = 19.27 | rouge_l = 36.71 | Precision = 48.71 | Recall = 35.84 | F1 = 38.95 | examples = 18505 | valid time = 362.99 (s) ]
+03/26/2021 06:40:38 PM: [ Best valid: bleu = 19.27 (epoch 5, 8680 updates) ]
+03/26/2021 06:51:52 PM: [ train: Epoch 6 | perplexity = 51.10 | ml_loss = 42.12 | Time for epoch = 670.54 (s) ]
+03/26/2021 06:58:04 PM: [ dev valid official: Epoch = 6 | bleu = 19.91 | rouge_l = 37.48 | Precision = 47.22 | Recall = 37.75 | F1 = 39.75 | examples = 18505 | valid time = 368.03 (s) ]
+03/26/2021 06:58:04 PM: [ Best valid: bleu = 19.91 (epoch 6, 10416 updates) ]
+03/26/2021 07:08:53 PM: [ train: Epoch 7 | perplexity = 40.23 | ml_loss = 39.47 | Time for epoch = 645.56 (s) ]
+03/26/2021 07:15:04 PM: [ dev valid official: Epoch = 7 | bleu = 19.70 | rouge_l = 37.47 | Precision = 43.05 | Recall = 40.27 | F1 = 39.42 | examples = 18505 | valid time = 366.54 (s) ]
+03/26/2021 07:25:03 PM: [ train: Epoch 8 | perplexity = 33.69 | ml_loss = 37.30 | Time for epoch = 599.51 (s) ]
+03/26/2021 07:31:13 PM: [ dev valid official: Epoch = 8 | bleu = 20.64 | rouge_l = 38.71 | Precision = 48.11 | Recall = 39.53 | F1 = 40.95 | examples = 18505 | valid time = 365.41 (s) ]
+03/26/2021 07:31:13 PM: [ Best valid: bleu = 20.64 (epoch 8, 13888 updates) ]
+03/26/2021 07:41:54 PM: [ train: Epoch 9 | perplexity = 27.62 | ml_loss = 35.46 | Time for epoch = 637.61 (s) ]
+03/26/2021 07:48:13 PM: [ dev valid official: Epoch = 9 | bleu = 21.37 | rouge_l = 39.33 | Precision = 48.08 | Recall = 40.35 | F1 = 41.61 | examples = 18505 | valid time = 374.72 (s) ]
+03/26/2021 07:48:13 PM: [ Best valid: bleu = 21.37 (epoch 9, 15624 updates) ]
+03/26/2021 07:58:59 PM: [ train: Epoch 10 | perplexity = 23.35 | ml_loss = 33.74 | Time for epoch = 642.52 (s) ]
+03/26/2021 08:05:07 PM: [ dev valid official: Epoch = 10 | bleu = 22.11 | rouge_l = 40.00 | Precision = 50.11 | Recall = 39.95 | F1 = 42.28 | examples = 18505 | valid time = 363.54 (s) ]
+03/26/2021 08:05:07 PM: [ Best valid: bleu = 22.11 (epoch 10, 17360 updates) ]
+03/26/2021 08:16:14 PM: [ train: Epoch 11 | perplexity = 19.79 | ml_loss = 32.16 | Time for epoch = 664.65 (s) ]
+03/26/2021 08:22:19 PM: [ dev valid official: Epoch = 11 | bleu = 22.33 | rouge_l = 40.28 | Precision = 49.10 | Recall = 41.02 | F1 = 42.47 | examples = 18505 | valid time = 359.83 (s) ]
+03/26/2021 08:22:19 PM: [ Best valid: bleu = 22.33 (epoch 11, 19096 updates) ]
+03/26/2021 08:32:42 PM: [ train: Epoch 12 | perplexity = 17.45 | ml_loss = 30.61 | Time for epoch = 620.25 (s) ]
+03/26/2021 08:38:48 PM: [ dev valid official: Epoch = 12 | bleu = 22.69 | rouge_l = 40.73 | Precision = 48.49 | Recall = 41.97 | F1 = 42.83 | examples = 18505 | valid time = 360.92 (s) ]
+03/26/2021 08:38:48 PM: [ Best valid: bleu = 22.69 (epoch 12, 20832 updates) ]
+03/26/2021 08:49:23 PM: [ train: Epoch 13 | perplexity = 15.11 | ml_loss = 29.20 | Time for epoch = 632.46 (s) ]
+03/26/2021 08:55:33 PM: [ dev valid official: Epoch = 13 | bleu = 23.09 | rouge_l = 41.05 | Precision = 49.84 | Recall = 41.71 | F1 = 43.24 | examples = 18505 | valid time = 365.61 (s) ]
+03/26/2021 08:55:33 PM: [ Best valid: bleu = 23.09 (epoch 13, 22568 updates) ]
+03/26/2021 09:05:34 PM: [ train: Epoch 14 | perplexity = 13.76 | ml_loss = 27.81 | Time for epoch = 597.40 (s) ]
+03/26/2021 09:11:42 PM: [ dev valid official: Epoch = 14 | bleu = 22.86 | rouge_l = 41.03 | Precision = 46.51 | Recall = 43.99 | F1 = 43.05 | examples = 18505 | valid time = 363.59 (s) ]
+03/26/2021 09:21:37 PM: [ train: Epoch 15 | perplexity = 12.27 | ml_loss = 26.58 | Time for epoch = 595.32 (s) ]
+03/26/2021 09:27:49 PM: [ dev valid official: Epoch = 15 | bleu = 23.69 | rouge_l = 41.68 | Precision = 49.53 | Recall = 43.08 | F1 = 43.87 | examples = 18505 | valid time = 366.85 (s) ]
+03/26/2021 09:27:49 PM: [ Best valid: bleu = 23.69 (epoch 15, 26040 updates) ]
+03/26/2021 09:38:33 PM: [ train: Epoch 16 | perplexity = 10.47 | ml_loss = 25.38 | Time for epoch = 641.63 (s) ]
+03/26/2021 09:44:41 PM: [ dev valid official: Epoch = 16 | bleu = 23.48 | rouge_l = 41.56 | Precision = 47.00 | Recall = 44.53 | F1 = 43.53 | examples = 18505 | valid time = 363.05 (s) ]
+03/26/2021 09:55:11 PM: [ train: Epoch 17 | perplexity = 9.44 | ml_loss = 24.24 | Time for epoch = 630.35 (s) ]
+03/26/2021 10:01:24 PM: [ dev valid official: Epoch = 17 | bleu = 24.26 | rouge_l = 42.22 | Precision = 49.86 | Recall = 43.51 | F1 = 44.36 | examples = 18505 | valid time = 368.03 (s) ]
+03/26/2021 10:01:24 PM: [ Best valid: bleu = 24.26 (epoch 17, 29512 updates) ]
+03/26/2021 10:11:24 PM: [ train: Epoch 18 | perplexity = 8.84 | ml_loss = 23.10 | Time for epoch = 597.10 (s) ]
+03/26/2021 10:17:40 PM: [ dev valid official: Epoch = 18 | bleu = 24.51 | rouge_l = 42.24 | Precision = 53.15 | Recall = 41.70 | F1 = 44.51 | examples = 18505 | valid time = 371.48 (s) ]
+03/26/2021 10:17:40 PM: [ Best valid: bleu = 24.51 (epoch 18, 31248 updates) ]
+03/26/2021 10:28:03 PM: [ train: Epoch 19 | perplexity = 7.80 | ml_loss = 22.11 | Time for epoch = 619.48 (s) ]
+03/26/2021 10:34:08 PM: [ dev valid official: Epoch = 19 | bleu = 25.11 | rouge_l = 42.58 | Precision = 52.41 | Recall = 42.51 | F1 = 44.74 | examples = 18505 | valid time = 360.22 (s) ]
+03/26/2021 10:34:08 PM: [ Best valid: bleu = 25.11 (epoch 19, 32984 updates) ]
+03/26/2021 10:44:01 PM: [ train: Epoch 20 | perplexity = 7.37 | ml_loss = 21.16 | Time for epoch = 589.84 (s) ]
+03/26/2021 10:50:07 PM: [ dev valid official: Epoch = 20 | bleu = 24.97 | rouge_l = 42.64 | Precision = 50.46 | Recall = 43.87 | F1 = 44.76 | examples = 18505 | valid time = 361.62 (s) ]
+03/26/2021 11:00:55 PM: [ train: Epoch 21 | perplexity = 6.33 | ml_loss = 20.26 | Time for epoch = 647.91 (s) ]
+03/26/2021 11:07:07 PM: [ dev valid official: Epoch = 21 | bleu = 25.22 | rouge_l = 42.66 | Precision = 48.82 | Recall = 44.83 | F1 = 44.65 | examples = 18505 | valid time = 367.40 (s) ]
+03/26/2021 11:07:07 PM: [ Best valid: bleu = 25.22 (epoch 21, 36456 updates) ]
+03/26/2021 11:17:50 PM: [ train: Epoch 22 | perplexity = 5.91 | ml_loss = 19.36 | Time for epoch = 640.43 (s) ]
+03/26/2021 11:23:58 PM: [ dev valid official: Epoch = 22 | bleu = 25.71 | rouge_l = 43.20 | Precision = 49.20 | Recall = 45.57 | F1 = 45.25 | examples = 18505 | valid time = 362.82 (s) ]
+03/26/2021 11:23:58 PM: [ Best valid: bleu = 25.71 (epoch 22, 38192 updates) ]
+03/26/2021 11:34:06 PM: [ train: Epoch 23 | perplexity = 5.66 | ml_loss = 18.49 | Time for epoch = 605.55 (s) ]
+03/26/2021 11:40:22 PM: [ dev valid official: Epoch = 23 | bleu = 25.69 | rouge_l = 43.20 | Precision = 48.91 | Recall = 45.65 | F1 = 45.18 | examples = 18505 | valid time = 370.69 (s) ]
+03/26/2021 11:51:15 PM: [ train: Epoch 24 | perplexity = 5.02 | ml_loss = 17.81 | Time for epoch = 653.47 (s) ]
+03/26/2021 11:57:23 PM: [ dev valid official: Epoch = 24 | bleu = 26.12 | rouge_l = 43.39 | Precision = 50.49 | Recall = 45.02 | F1 = 45.43 | examples = 18505 | valid time = 362.94 (s) ]
+03/26/2021 11:57:23 PM: [ Best valid: bleu = 26.12 (epoch 24, 41664 updates) ]
+03/27/2021 12:08:37 AM: [ train: Epoch 25 | perplexity = 4.50 | ml_loss = 17.01 | Time for epoch = 671.14 (s) ]
+03/27/2021 12:14:44 AM: [ dev valid official: Epoch = 25 | bleu = 25.89 | rouge_l = 43.09 | Precision = 47.29 | Recall = 46.58 | F1 = 44.94 | examples = 18505 | valid time = 362.28 (s) ]
+03/27/2021 12:24:53 AM: [ train: Epoch 26 | perplexity = 4.47 | ml_loss = 16.27 | Time for epoch = 609.17 (s) ]
+03/27/2021 12:31:01 AM: [ dev valid official: Epoch = 26 | bleu = 26.49 | rouge_l = 43.64 | Precision = 49.21 | Recall = 46.10 | F1 = 45.60 | examples = 18505 | valid time = 362.98 (s) ]
+03/27/2021 12:31:01 AM: [ Best valid: bleu = 26.49 (epoch 26, 45136 updates) ]
+03/27/2021 12:41:07 AM: [ train: Epoch 27 | perplexity = 4.23 | ml_loss = 15.63 | Time for epoch = 602.75 (s) ]
+03/27/2021 12:47:15 AM: [ dev valid official: Epoch = 27 | bleu = 26.64 | rouge_l = 43.78 | Precision = 48.92 | Recall = 46.52 | F1 = 45.68 | examples = 18505 | valid time = 362.73 (s) ]
+03/27/2021 12:47:15 AM: [ Best valid: bleu = 26.64 (epoch 27, 46872 updates) ]
+03/27/2021 12:57:49 AM: [ train: Epoch 28 | perplexity = 3.88 | ml_loss = 15.05 | Time for epoch = 630.66 (s) ]
+03/27/2021 01:03:53 AM: [ dev valid official: Epoch = 28 | bleu = 26.70 | rouge_l = 43.68 | Precision = 48.69 | Recall = 46.40 | F1 = 45.53 | examples = 18505 | valid time = 359.45 (s) ]
+03/27/2021 01:03:53 AM: [ Best valid: bleu = 26.70 (epoch 28, 48608 updates) ]
+03/27/2021 01:14:49 AM: [ train: Epoch 29 | perplexity = 3.56 | ml_loss = 14.45 | Time for epoch = 653.01 (s) ]
+03/27/2021 01:20:55 AM: [ dev valid official: Epoch = 29 | bleu = 27.19 | rouge_l = 44.16 | Precision = 50.91 | Recall = 45.64 | F1 = 46.09 | examples = 18505 | valid time = 361.41 (s) ]
+03/27/2021 01:20:55 AM: [ Best valid: bleu = 27.19 (epoch 29, 50344 updates) ]
+03/27/2021 01:31:33 AM: [ train: Epoch 30 | perplexity = 3.48 | ml_loss = 13.86 | Time for epoch = 634.47 (s) ]
+03/27/2021 01:37:38 AM: [ dev valid official: Epoch = 30 | bleu = 27.32 | rouge_l = 44.00 | Precision = 50.03 | Recall = 45.86 | F1 = 45.87 | examples = 18505 | valid time = 361.30 (s) ]
+03/27/2021 01:37:38 AM: [ Best valid: bleu = 27.32 (epoch 30, 52080 updates) ]
+03/27/2021 01:48:02 AM: [ train: Epoch 31 | perplexity = 3.31 | ml_loss = 13.33 | Time for epoch = 620.67 (s) ]
+03/27/2021 01:54:05 AM: [ dev valid official: Epoch = 31 | bleu = 27.65 | rouge_l = 44.52 | Precision = 50.30 | Recall = 46.65 | F1 = 46.39 | examples = 18505 | valid time = 358.82 (s) ]
+03/27/2021 01:54:05 AM: [ Best valid: bleu = 27.65 (epoch 31, 53816 updates) ]
+03/27/2021 02:03:59 AM: [ train: Epoch 32 | perplexity = 3.22 | ml_loss = 12.87 | Time for epoch = 591.21 (s) ]
+03/27/2021 02:10:06 AM: [ dev valid official: Epoch = 32 | bleu = 27.75 | rouge_l = 44.45 | Precision = 49.99 | Recall = 46.77 | F1 = 46.37 | examples = 18505 | valid time = 362.39 (s) ]
+03/27/2021 02:10:06 AM: [ Best valid: bleu = 27.75 (epoch 32, 55552 updates) ]
+03/27/2021 02:20:39 AM: [ train: Epoch 33 | perplexity = 2.98 | ml_loss = 12.43 | Time for epoch = 629.81 (s) ]
+03/27/2021 02:26:46 AM: [ dev valid official: Epoch = 33 | bleu = 27.68 | rouge_l = 44.47 | Precision = 49.44 | Recall = 47.16 | F1 = 46.36 | examples = 18505 | valid time = 362.23 (s) ]
+03/27/2021 02:37:51 AM: [ train: Epoch 34 | perplexity = 2.80 | ml_loss = 11.94 | Time for epoch = 665.27 (s) ]
+03/27/2021 02:43:57 AM: [ dev valid official: Epoch = 34 | bleu = 27.92 | rouge_l = 44.56 | Precision = 49.16 | Recall = 47.43 | F1 = 46.37 | examples = 18505 | valid time = 361.58 (s) ]
+03/27/2021 02:43:57 AM: [ Best valid: bleu = 27.92 (epoch 34, 59024 updates) ]
+03/27/2021 02:54:55 AM: [ train: Epoch 35 | perplexity = 2.70 | ml_loss = 11.49 | Time for epoch = 655.55 (s) ]
+03/27/2021 03:00:57 AM: [ dev valid official: Epoch = 35 | bleu = 27.94 | rouge_l = 44.65 | Precision = 49.44 | Recall = 47.51 | F1 = 46.48 | examples = 18505 | valid time = 357.26 (s) ]
+03/27/2021 03:00:57 AM: [ Best valid: bleu = 27.94 (epoch 35, 60760 updates) ]
+03/27/2021 03:11:12 AM: [ train: Epoch 36 | perplexity = 2.66 | ml_loss = 11.10 | Time for epoch = 612.20 (s) ]
+03/27/2021 03:17:25 AM: [ dev valid official: Epoch = 36 | bleu = 28.28 | rouge_l = 44.65 | Precision = 49.51 | Recall = 47.31 | F1 = 46.46 | examples = 18505 | valid time = 368.48 (s) ]
+03/27/2021 03:17:25 AM: [ Best valid: bleu = 28.28 (epoch 36, 62496 updates) ]
+03/27/2021 03:28:08 AM: [ train: Epoch 37 | perplexity = 2.53 | ml_loss = 10.67 | Time for epoch = 640.36 (s) ]
+03/27/2021 03:34:16 AM: [ dev valid official: Epoch = 37 | bleu = 28.42 | rouge_l = 45.09 | Precision = 51.38 | Recall = 46.85 | F1 = 47.05 | examples = 18505 | valid time = 364.11 (s) ]
+03/27/2021 03:34:16 AM: [ Best valid: bleu = 28.42 (epoch 37, 64232 updates) ]
+03/27/2021 03:44:17 AM: [ train: Epoch 38 | perplexity = 2.50 | ml_loss = 10.34 | Time for epoch = 598.09 (s) ]
+03/27/2021 03:50:24 AM: [ dev valid official: Epoch = 38 | bleu = 28.54 | rouge_l = 44.99 | Precision = 50.77 | Recall = 47.02 | F1 = 46.83 | examples = 18505 | valid time = 362.21 (s) ]
+03/27/2021 03:50:24 AM: [ Best valid: bleu = 28.54 (epoch 38, 65968 updates) ]
+03/27/2021 04:00:38 AM: [ train: Epoch 39 | perplexity = 2.41 | ml_loss = 10.02 | Time for epoch = 611.27 (s) ]
+03/27/2021 04:06:41 AM: [ dev valid official: Epoch = 39 | bleu = 28.41 | rouge_l = 44.75 | Precision = 49.18 | Recall = 47.74 | F1 = 46.53 | examples = 18505 | valid time = 358.93 (s) ]
+03/27/2021 04:17:46 AM: [ train: Epoch 40 | perplexity = 2.27 | ml_loss = 9.70 | Time for epoch = 665.00 (s) ]
+03/27/2021 04:23:50 AM: [ dev valid official: Epoch = 40 | bleu = 28.93 | rouge_l = 45.11 | Precision = 50.30 | Recall = 47.54 | F1 = 46.94 | examples = 18505 | valid time = 358.97 (s) ]
+03/27/2021 04:23:50 AM: [ Best valid: bleu = 28.93 (epoch 40, 69440 updates) ]
+03/27/2021 04:34:16 AM: [ train: Epoch 41 | perplexity = 2.23 | ml_loss = 9.35 | Time for epoch = 623.36 (s) ]
+03/27/2021 04:40:23 AM: [ dev valid official: Epoch = 41 | bleu = 28.64 | rouge_l = 45.04 | Precision = 49.63 | Recall = 47.95 | F1 = 46.82 | examples = 18505 | valid time = 363.08 (s) ]
+03/27/2021 04:51:14 AM: [ train: Epoch 42 | perplexity = 2.14 | ml_loss = 9.03 | Time for epoch = 651.24 (s) ]
+03/27/2021 04:57:19 AM: [ dev valid official: Epoch = 42 | bleu = 29.18 | rouge_l = 45.42 | Precision = 51.85 | Recall = 46.88 | F1 = 47.27 | examples = 18505 | valid time = 360.05 (s) ]
+03/27/2021 04:57:19 AM: [ Best valid: bleu = 29.18 (epoch 42, 72912 updates) ]
+03/27/2021 05:08:26 AM: [ train: Epoch 43 | perplexity = 2.08 | ml_loss = 8.73 | Time for epoch = 663.82 (s) ]
+03/27/2021 05:14:41 AM: [ dev valid official: Epoch = 43 | bleu = 29.06 | rouge_l = 45.33 | Precision = 50.04 | Recall = 48.04 | F1 = 47.12 | examples = 18505 | valid time = 370.98 (s) ]
+03/27/2021 05:25:16 AM: [ train: Epoch 44 | perplexity = 2.06 | ml_loss = 8.48 | Time for epoch = 634.68 (s) ]
+03/27/2021 05:31:20 AM: [ dev valid official: Epoch = 44 | bleu = 29.07 | rouge_l = 45.35 | Precision = 50.76 | Recall = 47.56 | F1 = 47.17 | examples = 18505 | valid time = 359.74 (s) ]
+03/27/2021 05:41:10 AM: [ train: Epoch 45 | perplexity = 2.04 | ml_loss = 8.21 | Time for epoch = 589.73 (s) ]
+03/27/2021 05:47:16 AM: [ dev valid official: Epoch = 45 | bleu = 29.32 | rouge_l = 45.41 | Precision = 51.79 | Recall = 46.84 | F1 = 47.24 | examples = 18505 | valid time = 361.27 (s) ]
+03/27/2021 05:47:16 AM: [ Best valid: bleu = 29.32 (epoch 45, 78120 updates) ]
+03/27/2021 05:58:06 AM: [ train: Epoch 46 | perplexity = 1.96 | ml_loss = 7.97 | Time for epoch = 647.46 (s) ]
+03/27/2021 06:04:15 AM: [ dev valid official: Epoch = 46 | bleu = 29.25 | rouge_l = 45.23 | Precision = 49.52 | Recall = 48.29 | F1 = 46.96 | examples = 18505 | valid time = 364.13 (s) ]
+03/27/2021 06:15:06 AM: [ train: Epoch 47 | perplexity = 1.91 | ml_loss = 7.73 | Time for epoch = 651.22 (s) ]
+03/27/2021 06:21:10 AM: [ dev valid official: Epoch = 47 | bleu = 29.24 | rouge_l = 45.37 | Precision = 49.57 | Recall = 48.39 | F1 = 47.06 | examples = 18505 | valid time = 360.00 (s) ]
+03/27/2021 06:31:10 AM: [ train: Epoch 48 | perplexity = 1.90 | ml_loss = 7.49 | Time for epoch = 599.85 (s) ]
+03/27/2021 06:37:11 AM: [ dev valid official: Epoch = 48 | bleu = 29.80 | rouge_l = 45.76 | Precision = 51.94 | Recall = 47.37 | F1 = 47.58 | examples = 18505 | valid time = 357.08 (s) ]
+03/27/2021 06:37:11 AM: [ Best valid: bleu = 29.80 (epoch 48, 83328 updates) ]
+03/27/2021 06:47:18 AM: [ train: Epoch 49 | perplexity = 1.86 | ml_loss = 7.31 | Time for epoch = 604.31 (s) ]
+03/27/2021 06:53:23 AM: [ dev valid official: Epoch = 49 | bleu = 29.76 | rouge_l = 45.82 | Precision = 51.43 | Recall = 47.92 | F1 = 47.66 | examples = 18505 | valid time = 360.60 (s) ]
+03/27/2021 07:04:28 AM: [ train: Epoch 50 | perplexity = 1.80 | ml_loss = 7.11 | Time for epoch = 664.11 (s) ]
+03/27/2021 07:10:38 AM: [ dev valid official: Epoch = 50 | bleu = 29.80 | rouge_l = 45.62 | Precision = 50.71 | Recall = 48.01 | F1 = 47.39 | examples = 18505 | valid time = 366.64 (s) ]
+03/27/2021 07:20:54 AM: [ train: Epoch 51 | perplexity = 1.78 | ml_loss = 6.87 | Time for epoch = 615.58 (s) ]
+03/27/2021 07:27:02 AM: [ dev valid official: Epoch = 51 | bleu = 29.68 | rouge_l = 45.76 | Precision = 50.01 | Recall = 48.77 | F1 = 47.46 | examples = 18505 | valid time = 363.51 (s) ]
+03/27/2021 07:37:54 AM: [ train: Epoch 52 | perplexity = 1.75 | ml_loss = 6.71 | Time for epoch = 651.57 (s) ]
+03/27/2021 07:44:02 AM: [ dev valid official: Epoch = 52 | bleu = 29.64 | rouge_l = 45.40 | Precision = 49.12 | Recall = 48.67 | F1 = 47.05 | examples = 18505 | valid time = 363.63 (s) ]
+03/27/2021 07:53:57 AM: [ train: Epoch 53 | perplexity = 1.73 | ml_loss = 6.50 | Time for epoch = 595.59 (s) ]
+03/27/2021 08:00:01 AM: [ dev valid official: Epoch = 53 | bleu = 29.91 | rouge_l = 45.69 | Precision = 49.95 | Recall = 48.67 | F1 = 47.40 | examples = 18505 | valid time = 359.53 (s) ]
+03/27/2021 08:00:01 AM: [ Best valid: bleu = 29.91 (epoch 53, 92008 updates) ]
+03/27/2021 08:11:06 AM: [ train: Epoch 54 | perplexity = 1.69 | ml_loss = 6.37 | Time for epoch = 661.12 (s) ]
+03/27/2021 08:17:08 AM: [ dev valid official: Epoch = 54 | bleu = 29.88 | rouge_l = 45.81 | Precision = 49.70 | Recall = 49.09 | F1 = 47.51 | examples = 18505 | valid time = 358.40 (s) ]
+03/27/2021 08:26:56 AM: [ train: Epoch 55 | perplexity = 1.68 | ml_loss = 6.13 | Time for epoch = 588.25 (s) ]
+03/27/2021 08:33:00 AM: [ dev valid official: Epoch = 55 | bleu = 30.14 | rouge_l = 45.78 | Precision = 50.87 | Recall = 48.05 | F1 = 47.53 | examples = 18505 | valid time = 359.40 (s) ]
+03/27/2021 08:33:00 AM: [ Best valid: bleu = 30.14 (epoch 55, 95480 updates) ]
+03/27/2021 08:43:33 AM: [ train: Epoch 56 | perplexity = 1.65 | ml_loss = 6.01 | Time for epoch = 629.76 (s) ]
+03/27/2021 08:49:39 AM: [ dev valid official: Epoch = 56 | bleu = 30.27 | rouge_l = 45.93 | Precision = 50.68 | Recall = 48.47 | F1 = 47.69 | examples = 18505 | valid time = 361.46 (s) ]
+03/27/2021 08:49:39 AM: [ Best valid: bleu = 30.27 (epoch 56, 97216 updates) ]
+03/27/2021 09:00:08 AM: [ train: Epoch 57 | perplexity = 1.63 | ml_loss = 5.83 | Time for epoch = 626.19 (s) ]
+03/27/2021 09:06:13 AM: [ dev valid official: Epoch = 57 | bleu = 30.13 | rouge_l = 45.75 | Precision = 50.66 | Recall = 48.14 | F1 = 47.53 | examples = 18505 | valid time = 360.61 (s) ]
+03/27/2021 09:17:32 AM: [ train: Epoch 58 | perplexity = 1.59 | ml_loss = 5.71 | Time for epoch = 679.65 (s) ]
+03/27/2021 09:23:40 AM: [ dev valid official: Epoch = 58 | bleu = 30.53 | rouge_l = 46.07 | Precision = 51.32 | Recall = 48.23 | F1 = 47.85 | examples = 18505 | valid time = 362.85 (s) ]
+03/27/2021 09:23:40 AM: [ Best valid: bleu = 30.53 (epoch 58, 100688 updates) ]
+03/27/2021 09:34:50 AM: [ train: Epoch 59 | perplexity = 1.57 | ml_loss = 5.53 | Time for epoch = 666.94 (s) ]
+03/27/2021 09:40:55 AM: [ dev valid official: Epoch = 59 | bleu = 30.25 | rouge_l = 46.03 | Precision = 50.22 | Recall = 49.03 | F1 = 47.75 | examples = 18505 | valid time = 360.62 (s) ]
+03/27/2021 09:51:20 AM: [ train: Epoch 60 | perplexity = 1.56 | ml_loss = 5.38 | Time for epoch = 625.79 (s) ]
+03/27/2021 09:57:23 AM: [ dev valid official: Epoch = 60 | bleu = 30.33 | rouge_l = 46.25 | Precision = 51.06 | Recall = 48.85 | F1 = 47.98 | examples = 18505 | valid time = 358.47 (s) ]
+03/27/2021 10:08:36 AM: [ train: Epoch 61 | perplexity = 1.53 | ml_loss = 5.25 | Time for epoch = 672.46 (s) ]
+03/27/2021 10:14:43 AM: [ dev valid official: Epoch = 61 | bleu = 30.53 | rouge_l = 46.15 | Precision = 50.90 | Recall = 48.61 | F1 = 47.88 | examples = 18505 | valid time = 362.73 (s) ]
+03/27/2021 10:25:16 AM: [ train: Epoch 62 | perplexity = 1.52 | ml_loss = 5.10 | Time for epoch = 632.66 (s) ]
+03/27/2021 10:31:22 AM: [ dev valid official: Epoch = 62 | bleu = 30.69 | rouge_l = 45.98 | Precision = 51.38 | Recall = 47.81 | F1 = 47.72 | examples = 18505 | valid time = 362.33 (s) ]
+03/27/2021 10:31:22 AM: [ Best valid: bleu = 30.69 (epoch 62, 107632 updates) ]
+03/27/2021 10:41:54 AM: [ train: Epoch 63 | perplexity = 1.51 | ml_loss = 5.02 | Time for epoch = 628.94 (s) ]
+03/27/2021 10:48:01 AM: [ dev valid official: Epoch = 63 | bleu = 30.57 | rouge_l = 46.15 | Precision = 50.39 | Recall = 49.30 | F1 = 47.91 | examples = 18505 | valid time = 363.42 (s) ]
+03/27/2021 10:59:23 AM: [ train: Epoch 64 | perplexity = 1.49 | ml_loss = 4.87 | Time for epoch = 681.04 (s) ]
+03/27/2021 11:05:29 AM: [ dev valid official: Epoch = 64 | bleu = 30.86 | rouge_l = 46.26 | Precision = 50.92 | Recall = 48.79 | F1 = 47.92 | examples = 18505 | valid time = 362.08 (s) ]
+03/27/2021 11:05:29 AM: [ Best valid: bleu = 30.86 (epoch 64, 111104 updates) ]
+03/27/2021 11:16:28 AM: [ train: Epoch 65 | perplexity = 1.47 | ml_loss = 4.76 | Time for epoch = 656.40 (s) ]
+03/27/2021 11:22:36 AM: [ dev valid official: Epoch = 65 | bleu = 30.55 | rouge_l = 46.15 | Precision = 50.19 | Recall = 49.28 | F1 = 47.84 | examples = 18505 | valid time = 363.07 (s) ]
+03/27/2021 11:33:12 AM: [ train: Epoch 66 | perplexity = 1.46 | ml_loss = 4.63 | Time for epoch = 635.95 (s) ]
+03/27/2021 11:39:22 AM: [ dev valid official: Epoch = 66 | bleu = 30.58 | rouge_l = 46.31 | Precision = 49.83 | Recall = 49.88 | F1 = 47.97 | examples = 18505 | valid time = 365.90 (s) ]
+03/27/2021 11:50:38 AM: [ train: Epoch 67 | perplexity = 1.44 | ml_loss = 4.52 | Time for epoch = 675.71 (s) ]
+03/27/2021 11:56:42 AM: [ dev valid official: Epoch = 67 | bleu = 30.74 | rouge_l = 46.20 | Precision = 50.06 | Recall = 49.44 | F1 = 47.85 | examples = 18505 | valid time = 359.39 (s) ]
+03/27/2021 12:06:46 PM: [ train: Epoch 68 | perplexity = 1.44 | ml_loss = 4.42 | Time for epoch = 604.75 (s) ]
+03/27/2021 12:12:53 PM: [ dev valid official: Epoch = 68 | bleu = 30.94 | rouge_l = 46.28 | Precision = 50.82 | Recall = 48.81 | F1 = 47.92 | examples = 18505 | valid time = 361.92 (s) ]
+03/27/2021 12:12:53 PM: [ Best valid: bleu = 30.94 (epoch 68, 118048 updates) ]
+03/27/2021 12:22:47 PM: [ train: Epoch 69 | perplexity = 1.43 | ml_loss = 4.31 | Time for epoch = 591.61 (s) ]
+03/27/2021 12:28:54 PM: [ dev valid official: Epoch = 69 | bleu = 30.82 | rouge_l = 46.24 | Precision = 50.17 | Recall = 49.25 | F1 = 47.89 | examples = 18505 | valid time = 362.46 (s) ]
+03/27/2021 12:38:56 PM: [ train: Epoch 70 | perplexity = 1.41 | ml_loss = 4.21 | Time for epoch = 601.71 (s) ]
+03/27/2021 12:45:00 PM: [ dev valid official: Epoch = 70 | bleu = 30.77 | rouge_l = 46.23 | Precision = 49.91 | Recall = 49.58 | F1 = 47.86 | examples = 18505 | valid time = 359.90 (s) ]
+03/27/2021 12:56:12 PM: [ train: Epoch 71 | perplexity = 1.40 | ml_loss = 4.14 | Time for epoch = 671.71 (s) ]
+03/27/2021 01:02:17 PM: [ dev valid official: Epoch = 71 | bleu = 30.99 | rouge_l = 46.35 | Precision = 50.57 | Recall = 49.09 | F1 = 47.95 | examples = 18505 | valid time = 360.66 (s) ]
+03/27/2021 01:02:17 PM: [ Best valid: bleu = 30.99 (epoch 71, 123256 updates) ]
+03/27/2021 01:13:26 PM: [ train: Epoch 72 | perplexity = 1.38 | ml_loss = 4.03 | Time for epoch = 665.90 (s) ]
+03/27/2021 01:19:33 PM: [ dev valid official: Epoch = 72 | bleu = 31.01 | rouge_l = 46.54 | Precision = 50.84 | Recall = 49.26 | F1 = 48.20 | examples = 18505 | valid time = 363.36 (s) ]
+03/27/2021 01:19:33 PM: [ Best valid: bleu = 31.01 (epoch 72, 124992 updates) ]
+03/27/2021 01:30:50 PM: [ train: Epoch 73 | perplexity = 1.37 | ml_loss = 3.94 | Time for epoch = 673.75 (s) ]
+03/27/2021 01:36:57 PM: [ dev valid official: Epoch = 73 | bleu = 31.13 | rouge_l = 46.47 | Precision = 51.05 | Recall = 48.97 | F1 = 48.10 | examples = 18505 | valid time = 363.53 (s) ]
+03/27/2021 01:36:57 PM: [ Best valid: bleu = 31.13 (epoch 73, 126728 updates) ]
+03/27/2021 01:48:08 PM: [ train: Epoch 74 | perplexity = 1.36 | ml_loss = 3.86 | Time for epoch = 667.95 (s) ]
+03/27/2021 01:54:14 PM: [ dev valid official: Epoch = 74 | bleu = 31.31 | rouge_l = 46.54 | Precision = 52.08 | Recall = 48.28 | F1 = 48.20 | examples = 18505 | valid time = 361.41 (s) ]
+03/27/2021 01:54:14 PM: [ Best valid: bleu = 31.31 (epoch 74, 128464 updates) ]
+03/27/2021 02:04:18 PM: [ train: Epoch 75 | perplexity = 1.36 | ml_loss = 3.73 | Time for epoch = 600.87 (s) ]
+03/27/2021 02:10:22 PM: [ dev valid official: Epoch = 75 | bleu = 30.90 | rouge_l = 46.20 | Precision = 50.33 | Recall = 49.06 | F1 = 47.82 | examples = 18505 | valid time = 360.08 (s) ]
+03/27/2021 02:21:34 PM: [ train: Epoch 76 | perplexity = 1.35 | ml_loss = 3.70 | Time for epoch = 672.22 (s) ]
+03/27/2021 02:27:41 PM: [ dev valid official: Epoch = 76 | bleu = 31.03 | rouge_l = 46.23 | Precision = 49.78 | Recall = 49.51 | F1 = 47.79 | examples = 18505 | valid time = 361.95 (s) ]
+03/27/2021 02:38:41 PM: [ train: Epoch 77 | perplexity = 1.33 | ml_loss = 3.60 | Time for epoch = 660.12 (s) ]
+03/27/2021 02:44:45 PM: [ dev valid official: Epoch = 77 | bleu = 31.19 | rouge_l = 46.47 | Precision = 50.54 | Recall = 49.45 | F1 = 48.12 | examples = 18505 | valid time = 359.40 (s) ]
+03/27/2021 02:55:52 PM: [ train: Epoch 78 | perplexity = 1.33 | ml_loss = 3.51 | Time for epoch = 667.45 (s) ]
+03/27/2021 03:01:54 PM: [ dev valid official: Epoch = 78 | bleu = 31.38 | rouge_l = 46.59 | Precision = 51.32 | Recall = 48.92 | F1 = 48.27 | examples = 18505 | valid time = 357.07 (s) ]
+03/27/2021 03:01:54 PM: [ Best valid: bleu = 31.38 (epoch 78, 135408 updates) ]
+03/27/2021 03:12:34 PM: [ train: Epoch 79 | perplexity = 1.32 | ml_loss = 3.47 | Time for epoch = 637.57 (s) ]
+03/27/2021 03:18:35 PM: [ dev valid official: Epoch = 79 | bleu = 31.20 | rouge_l = 46.49 | Precision = 50.27 | Recall = 49.67 | F1 = 48.13 | examples = 18505 | valid time = 357.18 (s) ]
+03/27/2021 03:29:21 PM: [ train: Epoch 80 | perplexity = 1.31 | ml_loss = 3.40 | Time for epoch = 645.29 (s) ]
+03/27/2021 03:35:25 PM: [ dev valid official: Epoch = 80 | bleu = 31.20 | rouge_l = 46.47 | Precision = 50.26 | Recall = 49.75 | F1 = 48.11 | examples = 18505 | valid time = 360.07 (s) ]
+03/27/2021 03:46:03 PM: [ train: Epoch 81 | perplexity = 1.31 | ml_loss = 3.30 | Time for epoch = 637.99 (s) ]
+03/27/2021 03:52:09 PM: [ dev valid official: Epoch = 81 | bleu = 31.33 | rouge_l = 46.70 | Precision = 50.55 | Recall = 49.79 | F1 = 48.37 | examples = 18505 | valid time = 362.10 (s) ]
+03/27/2021 04:02:05 PM: [ train: Epoch 82 | perplexity = 1.30 | ml_loss = 3.26 | Time for epoch = 595.66 (s) ]
+03/27/2021 04:08:14 PM: [ dev valid official: Epoch = 82 | bleu = 31.60 | rouge_l = 46.61 | Precision = 51.49 | Recall = 48.77 | F1 = 48.27 | examples = 18505 | valid time = 364.45 (s) ]
+03/27/2021 04:08:14 PM: [ Best valid: bleu = 31.60 (epoch 82, 142352 updates) ]
+03/27/2021 04:19:12 PM: [ train: Epoch 83 | perplexity = 1.29 | ml_loss = 3.21 | Time for epoch = 655.26 (s) ]
+03/27/2021 04:25:15 PM: [ dev valid official: Epoch = 83 | bleu = 31.22 | rouge_l = 46.32 | Precision = 49.67 | Recall = 49.70 | F1 = 47.88 | examples = 18505 | valid time = 358.43 (s) ]
+03/27/2021 04:35:19 PM: [ train: Epoch 84 | perplexity = 1.29 | ml_loss = 3.13 | Time for epoch = 604.34 (s) ]
+03/27/2021 04:41:21 PM: [ dev valid official: Epoch = 84 | bleu = 31.42 | rouge_l = 46.73 | Precision = 50.95 | Recall = 49.62 | F1 = 48.41 | examples = 18505 | valid time = 357.52 (s) ]
+03/27/2021 04:52:03 PM: [ train: Epoch 85 | perplexity = 1.28 | ml_loss = 3.07 | Time for epoch = 642.00 (s) ]
+03/27/2021 04:58:15 PM: [ dev valid official: Epoch = 85 | bleu = 31.51 | rouge_l = 46.70 | Precision = 50.80 | Recall = 49.62 | F1 = 48.35 | examples = 18505 | valid time = 363.37 (s) ]
+03/27/2021 05:08:41 PM: [ train: Epoch 86 | perplexity = 1.27 | ml_loss = 3.01 | Time for epoch = 626.01 (s) ]
+03/27/2021 05:14:46 PM: [ dev valid official: Epoch = 86 | bleu = 31.57 | rouge_l = 46.70 | Precision = 50.69 | Recall = 49.59 | F1 = 48.32 | examples = 18505 | valid time = 360.73 (s) ]
+03/27/2021 05:25:49 PM: [ train: Epoch 87 | perplexity = 1.27 | ml_loss = 2.96 | Time for epoch = 662.42 (s) ]
+03/27/2021 05:31:56 PM: [ dev valid official: Epoch = 87 | bleu = 31.66 | rouge_l = 46.74 | Precision = 50.95 | Recall = 49.44 | F1 = 48.38 | examples = 18505 | valid time = 362.70 (s) ]
+03/27/2021 05:31:56 PM: [ Best valid: bleu = 31.66 (epoch 87, 151032 updates) ]
+03/27/2021 05:41:54 PM: [ train: Epoch 88 | perplexity = 1.26 | ml_loss = 2.89 | Time for epoch = 595.18 (s) ]
+03/27/2021 05:48:02 PM: [ dev valid official: Epoch = 88 | bleu = 31.67 | rouge_l = 46.75 | Precision = 51.01 | Recall = 49.34 | F1 = 48.37 | examples = 18505 | valid time = 363.50 (s) ]
+03/27/2021 05:48:02 PM: [ Best valid: bleu = 31.67 (epoch 88, 152768 updates) ]
+03/27/2021 05:59:10 PM: [ train: Epoch 89 | perplexity = 1.26 | ml_loss = 2.85 | Time for epoch = 665.56 (s) ]
+03/27/2021 06:05:13 PM: [ dev valid official: Epoch = 89 | bleu = 31.77 | rouge_l = 46.67 | Precision = 51.46 | Recall = 48.89 | F1 = 48.29 | examples = 18505 | valid time = 358.58 (s) ]
+03/27/2021 06:05:13 PM: [ Best valid: bleu = 31.77 (epoch 89, 154504 updates) ]
+03/27/2021 06:16:26 PM: [ train: Epoch 90 | perplexity = 1.25 | ml_loss = 2.78 | Time for epoch = 670.68 (s) ]
+03/27/2021 06:22:33 PM: [ dev valid official: Epoch = 90 | bleu = 31.60 | rouge_l = 46.65 | Precision = 50.66 | Recall = 49.48 | F1 = 48.25 | examples = 18505 | valid time = 363.09 (s) ]
+03/27/2021 06:32:31 PM: [ train: Epoch 91 | perplexity = 1.25 | ml_loss = 2.72 | Time for epoch = 597.48 (s) ]
+03/27/2021 06:38:42 PM: [ dev valid official: Epoch = 91 | bleu = 31.78 | rouge_l = 46.86 | Precision = 51.78 | Recall = 49.02 | F1 = 48.53 | examples = 18505 | valid time = 366.16 (s) ]
+03/27/2021 06:38:42 PM: [ Best valid: bleu = 31.78 (epoch 91, 157976 updates) ]
+03/27/2021 06:49:49 PM: [ train: Epoch 92 | perplexity = 1.24 | ml_loss = 2.69 | Time for epoch = 663.32 (s) ]
+03/27/2021 06:55:59 PM: [ dev valid official: Epoch = 92 | bleu = 31.68 | rouge_l = 47.00 | Precision = 51.22 | Recall = 49.85 | F1 = 48.67 | examples = 18505 | valid time = 364.97 (s) ]
+03/27/2021 07:06:02 PM: [ train: Epoch 93 | perplexity = 1.24 | ml_loss = 2.64 | Time for epoch = 603.20 (s) ]
+03/27/2021 07:12:12 PM: [ dev valid official: Epoch = 93 | bleu = 31.89 | rouge_l = 46.90 | Precision = 51.49 | Recall = 49.26 | F1 = 48.53 | examples = 18505 | valid time = 364.59 (s) ]
+03/27/2021 07:12:12 PM: [ Best valid: bleu = 31.89 (epoch 93, 161448 updates) ]
+03/27/2021 07:22:58 PM: [ train: Epoch 94 | perplexity = 1.23 | ml_loss = 2.58 | Time for epoch = 642.83 (s) ]
+03/27/2021 07:29:10 PM: [ dev valid official: Epoch = 94 | bleu = 31.76 | rouge_l = 46.88 | Precision = 50.92 | Recall = 49.78 | F1 = 48.55 | examples = 18505 | valid time = 366.41 (s) ]
+03/27/2021 07:39:31 PM: [ train: Epoch 95 | perplexity = 1.23 | ml_loss = 2.54 | Time for epoch = 621.22 (s) ]
+03/27/2021 07:45:45 PM: [ dev valid official: Epoch = 95 | bleu = 31.90 | rouge_l = 47.00 | Precision = 51.11 | Recall = 49.71 | F1 = 48.57 | examples = 18505 | valid time = 368.87 (s) ]
+03/27/2021 07:45:45 PM: [ Best valid: bleu = 31.90 (epoch 95, 164920 updates) ]
+03/27/2021 07:55:49 PM: [ train: Epoch 96 | perplexity = 1.22 | ml_loss = 2.51 | Time for epoch = 601.01 (s) ]
+03/27/2021 08:02:03 PM: [ dev valid official: Epoch = 96 | bleu = 31.74 | rouge_l = 46.83 | Precision = 50.71 | Recall = 49.83 | F1 = 48.45 | examples = 18505 | valid time = 368.04 (s) ]
+03/27/2021 08:12:50 PM: [ train: Epoch 97 | perplexity = 1.22 | ml_loss = 2.49 | Time for epoch = 647.02 (s) ]
+03/27/2021 08:19:08 PM: [ dev valid official: Epoch = 97 | bleu = 31.68 | rouge_l = 46.78 | Precision = 50.89 | Recall = 49.63 | F1 = 48.41 | examples = 18505 | valid time = 372.94 (s) ]
+03/27/2021 08:30:09 PM: [ train: Epoch 98 | perplexity = 1.21 | ml_loss = 2.42 | Time for epoch = 660.17 (s) ]
+03/27/2021 08:36:27 PM: [ dev valid official: Epoch = 98 | bleu = 31.89 | rouge_l = 46.82 | Precision = 51.18 | Recall = 49.37 | F1 = 48.42 | examples = 18505 | valid time = 374.00 (s) ]
+03/27/2021 08:46:34 PM: [ train: Epoch 99 | perplexity = 1.21 | ml_loss = 2.37 | Time for epoch = 606.75 (s) ]
+03/27/2021 08:52:46 PM: [ dev valid official: Epoch = 99 | bleu = 31.84 | rouge_l = 46.69 | Precision = 50.58 | Recall = 49.56 | F1 = 48.27 | examples = 18505 | valid time = 367.10 (s) ]
+03/27/2021 09:03:57 PM: [ train: Epoch 100 | perplexity = 1.20 | ml_loss = 2.33 | Time for epoch = 671.06 (s) ]
+03/27/2021 09:10:10 PM: [ dev valid official: Epoch = 100 | bleu = 32.04 | rouge_l = 47.01 | Precision = 50.90 | Recall = 49.86 | F1 = 48.63 | examples = 18505 | valid time = 368.26 (s) ]
+03/27/2021 09:10:11 PM: [ Best valid: bleu = 32.04 (epoch 100, 173600 updates) ]
+03/27/2021 09:20:51 PM: [ train: Epoch 101 | perplexity = 1.20 | ml_loss = 2.30 | Time for epoch = 637.34 (s) ]
+03/27/2021 09:27:03 PM: [ dev valid official: Epoch = 101 | bleu = 31.88 | rouge_l = 46.96 | Precision = 50.84 | Recall = 49.95 | F1 = 48.60 | examples = 18505 | valid time = 366.42 (s) ]
+03/27/2021 09:38:34 PM: [ train: Epoch 102 | perplexity = 1.20 | ml_loss = 2.26 | Time for epoch = 691.36 (s) ]
+03/27/2021 09:44:48 PM: [ dev valid official: Epoch = 102 | bleu = 32.11 | rouge_l = 47.02 | Precision = 51.49 | Recall = 49.43 | F1 = 48.64 | examples = 18505 | valid time = 369.87 (s) ]
+03/27/2021 09:44:49 PM: [ Best valid: bleu = 32.11 (epoch 102, 177072 updates) ]
+03/27/2021 09:54:51 PM: [ train: Epoch 103 | perplexity = 1.19 | ml_loss = 2.22 | Time for epoch = 599.12 (s) ]
+03/27/2021 10:01:05 PM: [ dev valid official: Epoch = 103 | bleu = 32.08 | rouge_l = 47.04 | Precision = 51.78 | Recall = 49.27 | F1 = 48.67 | examples = 18505 | valid time = 369.65 (s) ]
+03/27/2021 10:11:15 PM: [ train: Epoch 104 | perplexity = 1.19 | ml_loss = 2.18 | Time for epoch = 609.76 (s) ]
+03/27/2021 10:17:28 PM: [ dev valid official: Epoch = 104 | bleu = 31.68 | rouge_l = 46.91 | Precision = 50.14 | Recall = 50.46 | F1 = 48.50 | examples = 18505 | valid time = 368.00 (s) ]
+03/27/2021 10:28:04 PM: [ train: Epoch 105 | perplexity = 1.19 | ml_loss = 2.15 | Time for epoch = 636.92 (s) ]
+03/27/2021 10:34:22 PM: [ dev valid official: Epoch = 105 | bleu = 32.10 | rouge_l = 47.10 | Precision = 50.86 | Recall = 50.16 | F1 = 48.69 | examples = 18505 | valid time = 372.98 (s) ]
+03/27/2021 10:44:29 PM: [ train: Epoch 106 | perplexity = 1.18 | ml_loss = 2.09 | Time for epoch = 606.85 (s) ]
+03/27/2021 10:50:36 PM: [ dev valid official: Epoch = 106 | bleu = 32.06 | rouge_l = 46.91 | Precision = 51.63 | Recall = 49.14 | F1 = 48.53 | examples = 18505 | valid time = 362.78 (s) ]
+03/27/2021 11:01:53 PM: [ train: Epoch 107 | perplexity = 1.18 | ml_loss = 2.09 | Time for epoch = 676.68 (s) ]
+03/27/2021 11:08:06 PM: [ dev valid official: Epoch = 107 | bleu = 31.91 | rouge_l = 46.95 | Precision = 51.02 | Recall = 49.73 | F1 = 48.56 | examples = 18505 | valid time = 368.36 (s) ]
+03/27/2021 11:19:10 PM: [ train: Epoch 108 | perplexity = 1.18 | ml_loss = 2.04 | Time for epoch = 664.42 (s) ]
+03/27/2021 11:25:26 PM: [ dev valid official: Epoch = 108 | bleu = 32.01 | rouge_l = 46.97 | Precision = 50.69 | Recall = 49.91 | F1 = 48.55 | examples = 18505 | valid time = 370.90 (s) ]
+03/27/2021 11:36:02 PM: [ train: Epoch 109 | perplexity = 1.17 | ml_loss = 2.01 | Time for epoch = 635.72 (s) ]
+03/27/2021 11:42:13 PM: [ dev valid official: Epoch = 109 | bleu = 31.79 | rouge_l = 46.77 | Precision = 49.81 | Recall = 50.36 | F1 = 48.28 | examples = 18505 | valid time = 366.56 (s) ]
+03/27/2021 11:53:01 PM: [ train: Epoch 110 | perplexity = 1.17 | ml_loss = 1.98 | Time for epoch = 647.61 (s) ]
+03/27/2021 11:59:15 PM: [ dev valid official: Epoch = 110 | bleu = 31.91 | rouge_l = 46.97 | Precision = 50.44 | Recall = 50.11 | F1 = 48.53 | examples = 18505 | valid time = 369.46 (s) ]
+03/28/2021 12:09:51 AM: [ train: Epoch 111 | perplexity = 1.17 | ml_loss = 1.95 | Time for epoch = 636.29 (s) ]
+03/28/2021 12:16:03 AM: [ dev valid official: Epoch = 111 | bleu = 32.02 | rouge_l = 47.02 | Precision = 50.77 | Recall = 50.00 | F1 = 48.60 | examples = 18505 | valid time = 366.99 (s) ]
+03/28/2021 12:26:14 AM: [ train: Epoch 112 | perplexity = 1.17 | ml_loss = 1.93 | Time for epoch = 611.09 (s) ]
+03/28/2021 12:32:33 AM: [ dev valid official: Epoch = 112 | bleu = 32.26 | rouge_l = 47.23 | Precision = 51.66 | Recall = 49.71 | F1 = 48.87 | examples = 18505 | valid time = 374.61 (s) ]
+03/28/2021 12:32:33 AM: [ Best valid: bleu = 32.26 (epoch 112, 194432 updates) ]
+03/28/2021 12:42:48 AM: [ train: Epoch 113 | perplexity = 1.16 | ml_loss = 1.89 | Time for epoch = 611.67 (s) ]
+03/28/2021 12:49:06 AM: [ dev valid official: Epoch = 113 | bleu = 32.21 | rouge_l = 47.22 | Precision = 51.48 | Recall = 49.79 | F1 = 48.83 | examples = 18505 | valid time = 373.95 (s) ]
+03/28/2021 12:59:38 AM: [ train: Epoch 114 | perplexity = 1.16 | ml_loss = 1.86 | Time for epoch = 631.56 (s) ]
+03/28/2021 01:05:50 AM: [ dev valid official: Epoch = 114 | bleu = 32.14 | rouge_l = 47.11 | Precision = 51.23 | Recall = 49.89 | F1 = 48.72 | examples = 18505 | valid time = 367.59 (s) ]
+03/28/2021 01:15:52 AM: [ train: Epoch 115 | perplexity = 1.16 | ml_loss = 1.83 | Time for epoch = 601.40 (s) ]
+03/28/2021 01:22:03 AM: [ dev valid official: Epoch = 115 | bleu = 32.12 | rouge_l = 46.95 | Precision = 50.91 | Recall = 49.69 | F1 = 48.54 | examples = 18505 | valid time = 367.04 (s) ]
+03/28/2021 01:32:55 AM: [ train: Epoch 116 | perplexity = 1.15 | ml_loss = 1.81 | Time for epoch = 651.47 (s) ]
+03/28/2021 01:39:09 AM: [ dev valid official: Epoch = 116 | bleu = 32.12 | rouge_l = 47.19 | Precision = 51.21 | Recall = 50.03 | F1 = 48.75 | examples = 18505 | valid time = 369.92 (s) ]
+03/28/2021 01:49:16 AM: [ train: Epoch 117 | perplexity = 1.15 | ml_loss = 1.77 | Time for epoch = 607.08 (s) ]
+03/28/2021 01:55:31 AM: [ dev valid official: Epoch = 117 | bleu = 32.16 | rouge_l = 47.06 | Precision = 50.87 | Recall = 50.01 | F1 = 48.64 | examples = 18505 | valid time = 370.12 (s) ]
+03/28/2021 02:06:18 AM: [ train: Epoch 118 | perplexity = 1.15 | ml_loss = 1.75 | Time for epoch = 646.68 (s) ]
+03/28/2021 02:12:28 AM: [ dev valid official: Epoch = 118 | bleu = 32.20 | rouge_l = 47.25 | Precision = 50.85 | Recall = 50.43 | F1 = 48.85 | examples = 18505 | valid time = 365.26 (s) ]
+03/28/2021 02:23:20 AM: [ train: Epoch 119 | perplexity = 1.15 | ml_loss = 1.73 | Time for epoch = 652.17 (s) ]
+03/28/2021 02:29:36 AM: [ dev valid official: Epoch = 119 | bleu = 32.05 | rouge_l = 47.10 | Precision = 50.58 | Recall = 50.42 | F1 = 48.71 | examples = 18505 | valid time = 371.08 (s) ]
+03/28/2021 02:41:04 AM: [ train: Epoch 120 | perplexity = 1.14 | ml_loss = 1.71 | Time for epoch = 688.16 (s) ]
+03/28/2021 02:47:20 AM: [ dev valid official: Epoch = 120 | bleu = 32.28 | rouge_l = 47.13 | Precision = 51.58 | Recall = 49.61 | F1 = 48.77 | examples = 18505 | valid time = 370.91 (s) ]
+03/28/2021 02:47:20 AM: [ Best valid: bleu = 32.28 (epoch 120, 208320 updates) ]
+03/28/2021 02:57:47 AM: [ train: Epoch 121 | perplexity = 1.14 | ml_loss = 1.68 | Time for epoch = 624.07 (s) ]
+03/28/2021 03:04:04 AM: [ dev valid official: Epoch = 121 | bleu = 32.26 | rouge_l = 47.21 | Precision = 51.16 | Recall = 50.16 | F1 = 48.84 | examples = 18505 | valid time = 371.89 (s) ]
+03/28/2021 03:14:22 AM: [ train: Epoch 122 | perplexity = 1.14 | ml_loss = 1.65 | Time for epoch = 617.83 (s) ]
+03/28/2021 03:20:35 AM: [ dev valid official: Epoch = 122 | bleu = 32.31 | rouge_l = 47.24 | Precision = 51.46 | Recall = 49.87 | F1 = 48.87 | examples = 18505 | valid time = 367.88 (s) ]
+03/28/2021 03:20:35 AM: [ Best valid: bleu = 32.31 (epoch 122, 211792 updates) ]
+03/28/2021 03:31:04 AM: [ train: Epoch 123 | perplexity = 1.14 | ml_loss = 1.63 | Time for epoch = 625.93 (s) ]
+03/28/2021 03:37:18 AM: [ dev valid official: Epoch = 123 | bleu = 32.23 | rouge_l = 46.96 | Precision = 50.72 | Recall = 49.90 | F1 = 48.53 | examples = 18505 | valid time = 369.51 (s) ]
+03/28/2021 03:47:45 AM: [ train: Epoch 124 | perplexity = 1.14 | ml_loss = 1.61 | Time for epoch = 626.54 (s) ]
+03/28/2021 03:53:54 AM: [ dev valid official: Epoch = 124 | bleu = 32.28 | rouge_l = 47.10 | Precision = 50.96 | Recall = 49.94 | F1 = 48.67 | examples = 18505 | valid time = 364.52 (s) ]
+03/28/2021 04:05:00 AM: [ train: Epoch 125 | perplexity = 1.13 | ml_loss = 1.58 | Time for epoch = 666.43 (s) ]
+03/28/2021 04:11:15 AM: [ dev valid official: Epoch = 125 | bleu = 32.26 | rouge_l = 47.03 | Precision = 51.04 | Recall = 49.64 | F1 = 48.59 | examples = 18505 | valid time = 369.41 (s) ]
+03/28/2021 04:22:55 AM: [ train: Epoch 126 | perplexity = 1.13 | ml_loss = 1.57 | Time for epoch = 700.29 (s) ]
+03/28/2021 04:29:09 AM: [ dev valid official: Epoch = 126 | bleu = 32.04 | rouge_l = 47.02 | Precision = 50.16 | Recall = 50.42 | F1 = 48.51 | examples = 18505 | valid time = 368.88 (s) ]
+03/28/2021 04:39:27 AM: [ train: Epoch 127 | perplexity = 1.13 | ml_loss = 1.54 | Time for epoch = 618.07 (s) ]
+03/28/2021 04:45:38 AM: [ dev valid official: Epoch = 127 | bleu = 32.14 | rouge_l = 47.20 | Precision = 50.91 | Recall = 50.25 | F1 = 48.76 | examples = 18505 | valid time = 367.02 (s) ]
+03/28/2021 04:57:02 AM: [ train: Epoch 128 | perplexity = 1.13 | ml_loss = 1.52 | Time for epoch = 683.16 (s) ]
+03/28/2021 05:03:17 AM: [ dev valid official: Epoch = 128 | bleu = 32.31 | rouge_l = 47.36 | Precision = 50.98 | Recall = 50.44 | F1 = 48.94 | examples = 18505 | valid time = 370.65 (s) ]
+03/28/2021 05:13:51 AM: [ train: Epoch 129 | perplexity = 1.13 | ml_loss = 1.51 | Time for epoch = 634.34 (s) ]
+03/28/2021 05:20:04 AM: [ dev valid official: Epoch = 129 | bleu = 32.35 | rouge_l = 47.20 | Precision = 50.97 | Recall = 50.17 | F1 = 48.79 | examples = 18505 | valid time = 368.09 (s) ]
+03/28/2021 05:20:04 AM: [ Best valid: bleu = 32.35 (epoch 129, 223944 updates) ]
+03/28/2021 05:30:55 AM: [ train: Epoch 130 | perplexity = 1.12 | ml_loss = 1.47 | Time for epoch = 647.48 (s) ]
+03/28/2021 05:37:07 AM: [ dev valid official: Epoch = 130 | bleu = 32.36 | rouge_l = 47.29 | Precision = 51.01 | Recall = 50.31 | F1 = 48.88 | examples = 18505 | valid time = 367.94 (s) ]
+03/28/2021 05:37:07 AM: [ Best valid: bleu = 32.36 (epoch 130, 225680 updates) ]
+03/28/2021 05:48:40 AM: [ train: Epoch 131 | perplexity = 1.12 | ml_loss = 1.47 | Time for epoch = 689.40 (s) ]
+03/28/2021 05:54:56 AM: [ dev valid official: Epoch = 131 | bleu = 32.47 | rouge_l = 47.29 | Precision = 51.46 | Recall = 49.93 | F1 = 48.89 | examples = 18505 | valid time = 371.80 (s) ]
+03/28/2021 05:54:56 AM: [ Best valid: bleu = 32.47 (epoch 131, 227416 updates) ]
+03/28/2021 06:06:07 AM: [ train: Epoch 132 | perplexity = 1.12 | ml_loss = 1.44 | Time for epoch = 668.17 (s) ]
+03/28/2021 06:12:15 AM: [ dev valid official: Epoch = 132 | bleu = 32.37 | rouge_l = 47.21 | Precision = 50.76 | Recall = 50.37 | F1 = 48.79 | examples = 18505 | valid time = 362.66 (s) ]
+03/28/2021 06:22:59 AM: [ train: Epoch 133 | perplexity = 1.12 | ml_loss = 1.41 | Time for epoch = 644.46 (s) ]
+03/28/2021 06:29:13 AM: [ dev valid official: Epoch = 133 | bleu = 32.54 | rouge_l = 47.41 | Precision = 51.92 | Recall = 49.84 | F1 = 49.07 | examples = 18505 | valid time = 369.11 (s) ]
+03/28/2021 06:29:13 AM: [ Best valid: bleu = 32.54 (epoch 133, 230888 updates) ]
+03/28/2021 06:40:12 AM: [ train: Epoch 134 | perplexity = 1.12 | ml_loss = 1.39 | Time for epoch = 656.14 (s) ]
+03/28/2021 06:46:27 AM: [ dev valid official: Epoch = 134 | bleu = 32.56 | rouge_l = 47.41 | Precision = 51.63 | Recall = 49.97 | F1 = 49.03 | examples = 18505 | valid time = 370.24 (s) ]
+03/28/2021 06:46:27 AM: [ Best valid: bleu = 32.56 (epoch 134, 232624 updates) ]
+03/28/2021 06:56:30 AM: [ train: Epoch 135 | perplexity = 1.12 | ml_loss = 1.38 | Time for epoch = 600.32 (s) ]
+03/28/2021 07:02:40 AM: [ dev valid official: Epoch = 135 | bleu = 32.45 | rouge_l = 47.21 | Precision = 51.52 | Recall = 49.90 | F1 = 48.87 | examples = 18505 | valid time = 365.64 (s) ]
+03/28/2021 07:12:55 AM: [ train: Epoch 136 | perplexity = 1.12 | ml_loss = 1.37 | Time for epoch = 614.34 (s) ]
+03/28/2021 07:19:06 AM: [ dev valid official: Epoch = 136 | bleu = 32.47 | rouge_l = 47.38 | Precision = 51.39 | Recall = 50.09 | F1 = 48.95 | examples = 18505 | valid time = 366.42 (s) ]
+03/28/2021 07:29:23 AM: [ train: Epoch 137 | perplexity = 1.11 | ml_loss = 1.34 | Time for epoch = 617.31 (s) ]
+03/28/2021 07:35:36 AM: [ dev valid official: Epoch = 137 | bleu = 32.44 | rouge_l = 47.34 | Precision = 51.14 | Recall = 50.24 | F1 = 48.89 | examples = 18505 | valid time = 368.45 (s) ]
+03/28/2021 07:45:40 AM: [ train: Epoch 138 | perplexity = 1.11 | ml_loss = 1.33 | Time for epoch = 604.19 (s) ]
+03/28/2021 07:51:53 AM: [ dev valid official: Epoch = 138 | bleu = 32.39 | rouge_l = 47.21 | Precision = 51.14 | Recall = 50.00 | F1 = 48.77 | examples = 18505 | valid time = 367.76 (s) ]
+03/28/2021 08:02:43 AM: [ train: Epoch 139 | perplexity = 1.11 | ml_loss = 1.30 | Time for epoch = 649.78 (s) ]
+03/28/2021 08:08:54 AM: [ dev valid official: Epoch = 139 | bleu = 32.43 | rouge_l = 47.34 | Precision = 51.17 | Recall = 50.27 | F1 = 48.93 | examples = 18505 | valid time = 366.92 (s) ]
+03/28/2021 08:19:34 AM: [ train: Epoch 140 | perplexity = 1.11 | ml_loss = 1.29 | Time for epoch = 639.84 (s) ]
+03/28/2021 08:25:47 AM: [ dev valid official: Epoch = 140 | bleu = 32.55 | rouge_l = 47.45 | Precision = 51.77 | Recall = 50.02 | F1 = 49.09 | examples = 18505 | valid time = 367.70 (s) ]
+03/28/2021 08:36:45 AM: [ train: Epoch 141 | perplexity = 1.11 | ml_loss = 1.27 | Time for epoch = 658.52 (s) ]
+03/28/2021 08:42:55 AM: [ dev valid official: Epoch = 141 | bleu = 32.63 | rouge_l = 47.42 | Precision = 51.92 | Recall = 49.81 | F1 = 49.03 | examples = 18505 | valid time = 365.04 (s) ]
+03/28/2021 08:42:55 AM: [ Best valid: bleu = 32.63 (epoch 141, 244776 updates) ]
+03/28/2021 08:53:02 AM: [ train: Epoch 142 | perplexity = 1.11 | ml_loss = 1.26 | Time for epoch = 603.90 (s) ]
+03/28/2021 08:59:18 AM: [ dev valid official: Epoch = 142 | bleu = 32.41 | rouge_l = 47.26 | Precision = 51.11 | Recall = 50.17 | F1 = 48.86 | examples = 18505 | valid time = 372.25 (s) ]
+03/28/2021 09:10:14 AM: [ train: Epoch 143 | perplexity = 1.10 | ml_loss = 1.25 | Time for epoch = 655.07 (s) ]
+03/28/2021 09:16:22 AM: [ dev valid official: Epoch = 143 | bleu = 32.65 | rouge_l = 47.49 | Precision = 51.77 | Recall = 49.97 | F1 = 49.09 | examples = 18505 | valid time = 363.63 (s) ]
+03/28/2021 09:16:22 AM: [ Best valid: bleu = 32.65 (epoch 143, 248248 updates) ]
+03/28/2021 09:27:13 AM: [ train: Epoch 144 | perplexity = 1.10 | ml_loss = 1.23 | Time for epoch = 647.99 (s) ]
+03/28/2021 09:33:20 AM: [ dev valid official: Epoch = 144 | bleu = 32.63 | rouge_l = 47.45 | Precision = 51.76 | Recall = 50.02 | F1 = 49.10 | examples = 18505 | valid time = 362.48 (s) ]
+03/28/2021 09:43:54 AM: [ train: Epoch 145 | perplexity = 1.10 | ml_loss = 1.22 | Time for epoch = 634.58 (s) ]
+03/28/2021 09:49:57 AM: [ dev valid official: Epoch = 145 | bleu = 32.44 | rouge_l = 47.25 | Precision = 50.80 | Recall = 50.30 | F1 = 48.77 | examples = 18505 | valid time = 358.76 (s) ]
+03/28/2021 09:59:56 AM: [ train: Epoch 146 | perplexity = 1.10 | ml_loss = 1.20 | Time for epoch = 598.54 (s) ]
+03/28/2021 10:06:09 AM: [ dev valid official: Epoch = 146 | bleu = 32.44 | rouge_l = 47.41 | Precision = 51.41 | Recall = 50.18 | F1 = 48.98 | examples = 18505 | valid time = 368.78 (s) ]
+03/28/2021 10:17:14 AM: [ train: Epoch 147 | perplexity = 1.10 | ml_loss = 1.18 | Time for epoch = 665.27 (s) ]
+03/28/2021 10:23:19 AM: [ dev valid official: Epoch = 147 | bleu = 32.42 | rouge_l = 47.30 | Precision = 50.79 | Recall = 50.40 | F1 = 48.82 | examples = 18505 | valid time = 360.66 (s) ]
+03/28/2021 10:33:13 AM: [ train: Epoch 148 | perplexity = 1.10 | ml_loss = 1.17 | Time for epoch = 594.10 (s) ]
+03/28/2021 10:39:17 AM: [ dev valid official: Epoch = 148 | bleu = 32.39 | rouge_l = 47.35 | Precision = 50.86 | Recall = 50.51 | F1 = 48.88 | examples = 18505 | valid time = 360.11 (s) ]
+03/28/2021 10:50:21 AM: [ train: Epoch 149 | perplexity = 1.10 | ml_loss = 1.16 | Time for epoch = 663.49 (s) ]
+03/28/2021 10:56:25 AM: [ dev valid official: Epoch = 149 | bleu = 32.71 | rouge_l = 47.56 | Precision = 51.42 | Recall = 50.32 | F1 = 49.11 | examples = 18505 | valid time = 359.54 (s) ]
+03/28/2021 10:56:25 AM: [ Best valid: bleu = 32.71 (epoch 149, 258664 updates) ]
+03/28/2021 11:07:00 AM: [ train: Epoch 150 | perplexity = 1.09 | ml_loss = 1.14 | Time for epoch = 632.49 (s) ]
+03/28/2021 11:13:12 AM: [ dev valid official: Epoch = 150 | bleu = 32.69 | rouge_l = 47.42 | Precision = 51.38 | Recall = 50.15 | F1 = 48.99 | examples = 18505 | valid time = 367.04 (s) ]
+03/28/2021 11:23:45 AM: [ train: Epoch 151 | perplexity = 1.09 | ml_loss = 1.13 | Time for epoch = 633.21 (s) ]
+03/28/2021 11:29:49 AM: [ dev valid official: Epoch = 151 | bleu = 32.55 | rouge_l = 47.24 | Precision = 50.95 | Recall = 50.20 | F1 = 48.79 | examples = 18505 | valid time = 358.86 (s) ]
+03/28/2021 11:40:03 AM: [ train: Epoch 152 | perplexity = 1.09 | ml_loss = 1.12 | Time for epoch = 614.04 (s) ]
+03/28/2021 11:46:06 AM: [ dev valid official: Epoch = 152 | bleu = 32.58 | rouge_l = 47.36 | Precision = 51.16 | Recall = 50.23 | F1 = 48.92 | examples = 18505 | valid time = 358.99 (s) ]
+03/28/2021 11:57:01 AM: [ train: Epoch 153 | perplexity = 1.09 | ml_loss = 1.11 | Time for epoch = 654.76 (s) ]
+03/28/2021 12:03:13 PM: [ dev valid official: Epoch = 153 | bleu = 32.74 | rouge_l = 47.54 | Precision = 51.73 | Recall = 50.15 | F1 = 49.14 | examples = 18505 | valid time = 367.90 (s) ]
+03/28/2021 12:03:13 PM: [ Best valid: bleu = 32.74 (epoch 153, 265608 updates) ]
+03/28/2021 12:13:52 PM: [ train: Epoch 154 | perplexity = 1.09 | ml_loss = 1.10 | Time for epoch = 636.62 (s) ]
+03/28/2021 12:19:57 PM: [ dev valid official: Epoch = 154 | bleu = 32.55 | rouge_l = 47.30 | Precision = 50.90 | Recall = 50.41 | F1 = 48.89 | examples = 18505 | valid time = 360.07 (s) ]
+03/28/2021 12:30:59 PM: [ train: Epoch 155 | perplexity = 1.09 | ml_loss = 1.08 | Time for epoch = 661.93 (s) ]
+03/28/2021 12:37:01 PM: [ dev valid official: Epoch = 155 | bleu = 32.64 | rouge_l = 47.44 | Precision = 51.62 | Recall = 50.10 | F1 = 49.05 | examples = 18505 | valid time = 357.94 (s) ]
+03/28/2021 12:47:49 PM: [ train: Epoch 156 | perplexity = 1.09 | ml_loss = 1.06 | Time for epoch = 648.23 (s) ]
+03/28/2021 12:53:59 PM: [ dev valid official: Epoch = 156 | bleu = 32.60 | rouge_l = 47.50 | Precision = 51.56 | Recall = 50.20 | F1 = 49.11 | examples = 18505 | valid time = 365.63 (s) ]
+03/28/2021 01:04:50 PM: [ train: Epoch 157 | perplexity = 1.09 | ml_loss = 1.05 | Time for epoch = 650.86 (s) ]
+03/28/2021 01:10:56 PM: [ dev valid official: Epoch = 157 | bleu = 32.62 | rouge_l = 47.39 | Precision = 51.27 | Recall = 50.21 | F1 = 48.97 | examples = 18505 | valid time = 361.83 (s) ]
+03/28/2021 01:21:55 PM: [ train: Epoch 158 | perplexity = 1.09 | ml_loss = 1.04 | Time for epoch = 658.55 (s) ]
+03/28/2021 01:27:55 PM: [ dev valid official: Epoch = 158 | bleu = 32.70 | rouge_l = 47.37 | Precision = 51.66 | Recall = 49.92 | F1 = 48.99 | examples = 18505 | valid time = 356.55 (s) ]
+03/28/2021 01:38:08 PM: [ train: Epoch 159 | perplexity = 1.09 | ml_loss = 1.03 | Time for epoch = 613.16 (s) ]
+03/28/2021 01:44:13 PM: [ dev valid official: Epoch = 159 | bleu = 32.62 | rouge_l = 47.44 | Precision = 51.37 | Recall = 50.38 | F1 = 49.06 | examples = 18505 | valid time = 359.45 (s) ]
+03/28/2021 01:55:05 PM: [ train: Epoch 160 | perplexity = 1.08 | ml_loss = 1.01 | Time for epoch = 651.95 (s) ]
+03/28/2021 02:01:20 PM: [ dev valid official: Epoch = 160 | bleu = 32.70 | rouge_l = 47.33 | Precision = 51.20 | Recall = 50.13 | F1 = 48.92 | examples = 18505 | valid time = 370.51 (s) ]
+03/28/2021 02:11:51 PM: [ train: Epoch 161 | perplexity = 1.08 | ml_loss = 1.00 | Time for epoch = 631.14 (s) ]
+03/28/2021 02:17:55 PM: [ dev valid official: Epoch = 161 | bleu = 32.68 | rouge_l = 47.40 | Precision = 51.27 | Recall = 50.25 | F1 = 49.00 | examples = 18505 | valid time = 360.05 (s) ]
+03/28/2021 02:28:13 PM: [ train: Epoch 162 | perplexity = 1.08 | ml_loss = 0.99 | Time for epoch = 617.98 (s) ]
+03/28/2021 02:34:20 PM: [ dev valid official: Epoch = 162 | bleu = 32.67 | rouge_l = 47.48 | Precision = 51.34 | Recall = 50.36 | F1 = 49.10 | examples = 18505 | valid time = 362.65 (s) ]
+03/28/2021 02:44:56 PM: [ train: Epoch 163 | perplexity = 1.08 | ml_loss = 0.99 | Time for epoch = 635.69 (s) ]
+03/28/2021 02:51:04 PM: [ dev valid official: Epoch = 163 | bleu = 32.63 | rouge_l = 47.34 | Precision = 51.26 | Recall = 50.08 | F1 = 48.90 | examples = 18505 | valid time = 363.97 (s) ]
+03/28/2021 03:01:47 PM: [ train: Epoch 164 | perplexity = 1.08 | ml_loss = 0.97 | Time for epoch = 643.10 (s) ]
+03/28/2021 03:07:58 PM: [ dev valid official: Epoch = 164 | bleu = 32.63 | rouge_l = 47.44 | Precision = 51.47 | Recall = 50.18 | F1 = 49.04 | examples = 18505 | valid time = 365.82 (s) ]
+03/28/2021 03:18:25 PM: [ train: Epoch 165 | perplexity = 1.08 | ml_loss = 0.96 | Time for epoch = 626.92 (s) ]
+03/28/2021 03:24:34 PM: [ dev valid official: Epoch = 165 | bleu = 32.50 | rouge_l = 47.29 | Precision = 50.90 | Recall = 50.36 | F1 = 48.86 | examples = 18505 | valid time = 365.32 (s) ]
+03/28/2021 03:35:43 PM: [ train: Epoch 166 | perplexity = 1.08 | ml_loss = 0.94 | Time for epoch = 668.83 (s) ]
+03/28/2021 03:41:52 PM: [ dev valid official: Epoch = 166 | bleu = 32.77 | rouge_l = 47.54 | Precision = 51.58 | Recall = 50.37 | F1 = 49.20 | examples = 18505 | valid time = 364.51 (s) ]
+03/28/2021 03:41:52 PM: [ Best valid: bleu = 32.77 (epoch 166, 288176 updates) ]
+03/28/2021 03:52:09 PM: [ train: Epoch 167 | perplexity = 1.08 | ml_loss = 0.94 | Time for epoch = 611.49 (s) ]
+03/28/2021 03:58:27 PM: [ dev valid official: Epoch = 167 | bleu = 32.71 | rouge_l = 47.42 | Precision = 51.50 | Recall = 50.12 | F1 = 49.03 | examples = 18505 | valid time = 373.68 (s) ]
+03/28/2021 04:09:19 PM: [ train: Epoch 168 | perplexity = 1.08 | ml_loss = 0.93 | Time for epoch = 652.38 (s) ]
+03/28/2021 04:15:28 PM: [ dev valid official: Epoch = 168 | bleu = 32.71 | rouge_l = 47.33 | Precision = 51.01 | Recall = 50.24 | F1 = 48.87 | examples = 18505 | valid time = 364.76 (s) ]
+03/28/2021 04:26:18 PM: [ train: Epoch 169 | perplexity = 1.08 | ml_loss = 0.92 | Time for epoch = 649.64 (s) ]
+03/28/2021 04:32:31 PM: [ dev valid official: Epoch = 169 | bleu = 32.91 | rouge_l = 47.58 | Precision = 52.08 | Recall = 49.87 | F1 = 49.19 | examples = 18505 | valid time = 369.04 (s) ]
+03/28/2021 04:32:31 PM: [ Best valid: bleu = 32.91 (epoch 169, 293384 updates) ]
+03/28/2021 04:42:33 PM: [ train: Epoch 170 | perplexity = 1.08 | ml_loss = 0.91 | Time for epoch = 599.46 (s) ]
+03/28/2021 04:48:46 PM: [ dev valid official: Epoch = 170 | bleu = 32.71 | rouge_l = 47.54 | Precision = 51.40 | Recall = 50.36 | F1 = 49.12 | examples = 18505 | valid time = 368.67 (s) ]
+03/28/2021 04:58:39 PM: [ train: Epoch 171 | perplexity = 1.07 | ml_loss = 0.90 | Time for epoch = 592.32 (s) ]
+03/28/2021 05:04:49 PM: [ dev valid official: Epoch = 171 | bleu = 32.77 | rouge_l = 47.52 | Precision = 51.37 | Recall = 50.32 | F1 = 49.08 | examples = 18505 | valid time = 365.76 (s) ]
+03/28/2021 05:15:17 PM: [ train: Epoch 172 | perplexity = 1.07 | ml_loss = 0.89 | Time for epoch = 627.89 (s) ]
+03/28/2021 05:21:40 PM: [ dev valid official: Epoch = 172 | bleu = 32.89 | rouge_l = 47.51 | Precision = 51.91 | Recall = 49.97 | F1 = 49.13 | examples = 18505 | valid time = 378.88 (s) ]
+03/28/2021 05:31:47 PM: [ train: Epoch 173 | perplexity = 1.07 | ml_loss = 0.88 | Time for epoch = 606.54 (s) ]
+03/28/2021 05:38:07 PM: [ dev valid official: Epoch = 173 | bleu = 32.75 | rouge_l = 47.49 | Precision = 51.45 | Recall = 50.31 | F1 = 49.10 | examples = 18505 | valid time = 374.93 (s) ]
+03/28/2021 05:49:02 PM: [ train: Epoch 174 | perplexity = 1.07 | ml_loss = 0.87 | Time for epoch = 654.94 (s) ]
+03/28/2021 05:55:30 PM: [ dev valid official: Epoch = 174 | bleu = 32.72 | rouge_l = 47.34 | Precision = 50.98 | Recall = 50.23 | F1 = 48.87 | examples = 18505 | valid time = 384.04 (s) ]
+03/28/2021 06:05:58 PM: [ train: Epoch 175 | perplexity = 1.07 | ml_loss = 0.86 | Time for epoch = 627.43 (s) ]
+03/28/2021 06:12:21 PM: [ dev valid official: Epoch = 175 | bleu = 32.80 | rouge_l = 47.39 | Precision = 51.23 | Recall = 50.12 | F1 = 48.92 | examples = 18505 | valid time = 378.16 (s) ]
+03/28/2021 06:22:20 PM: [ train: Epoch 176 | perplexity = 1.07 | ml_loss = 0.85 | Time for epoch = 599.02 (s) ]
+03/28/2021 06:28:44 PM: [ dev valid official: Epoch = 176 | bleu = 32.62 | rouge_l = 47.27 | Precision = 50.89 | Recall = 50.20 | F1 = 48.79 | examples = 18505 | valid time = 378.89 (s) ]
+03/28/2021 06:40:05 PM: [ train: Epoch 177 | perplexity = 1.07 | ml_loss = 0.85 | Time for epoch = 680.75 (s) ]
+03/28/2021 06:46:22 PM: [ dev valid official: Epoch = 177 | bleu = 32.89 | rouge_l = 47.55 | Precision = 51.94 | Recall = 49.91 | F1 = 49.13 | examples = 18505 | valid time = 372.22 (s) ]
+03/28/2021 06:57:14 PM: [ train: Epoch 178 | perplexity = 1.07 | ml_loss = 0.85 | Time for epoch = 652.54 (s) ]
+03/28/2021 07:03:38 PM: [ dev valid official: Epoch = 178 | bleu = 32.66 | rouge_l = 47.31 | Precision = 51.25 | Recall = 50.00 | F1 = 48.83 | examples = 18505 | valid time = 378.95 (s) ]
+03/28/2021 07:13:51 PM: [ train: Epoch 179 | perplexity = 1.07 | ml_loss = 0.83 | Time for epoch = 613.06 (s) ]
+03/28/2021 07:20:15 PM: [ dev valid official: Epoch = 179 | bleu = 32.68 | rouge_l = 47.35 | Precision = 51.15 | Recall = 50.20 | F1 = 48.90 | examples = 18505 | valid time = 378.96 (s) ]
+03/28/2021 07:31:09 PM: [ train: Epoch 180 | perplexity = 1.07 | ml_loss = 0.83 | Time for epoch = 653.89 (s) ]
+03/28/2021 07:37:27 PM: [ dev valid official: Epoch = 180 | bleu = 32.84 | rouge_l = 47.53 | Precision = 51.64 | Recall = 50.16 | F1 = 49.13 | examples = 18505 | valid time = 373.45 (s) ]
+03/28/2021 07:47:34 PM: [ train: Epoch 181 | perplexity = 1.07 | ml_loss = 0.82 | Time for epoch = 606.63 (s) ]
+03/28/2021 07:53:52 PM: [ dev valid official: Epoch = 181 | bleu = 32.80 | rouge_l = 47.65 | Precision = 51.74 | Recall = 50.36 | F1 = 49.25 | examples = 18505 | valid time = 373.35 (s) ]
+03/28/2021 08:05:11 PM: [ train: Epoch 182 | perplexity = 1.07 | ml_loss = 0.81 | Time for epoch = 678.78 (s) ]
+03/28/2021 08:11:30 PM: [ dev valid official: Epoch = 182 | bleu = 32.98 | rouge_l = 47.62 | Precision = 51.59 | Recall = 50.34 | F1 = 49.20 | examples = 18505 | valid time = 374.84 (s) ]
+03/28/2021 08:11:30 PM: [ Best valid: bleu = 32.98 (epoch 182, 315952 updates) ]
+03/28/2021 08:23:01 PM: [ train: Epoch 183 | perplexity = 1.07 | ml_loss = 0.81 | Time for epoch = 687.30 (s) ]
+03/28/2021 08:29:24 PM: [ dev valid official: Epoch = 183 | bleu = 32.91 | rouge_l = 47.67 | Precision = 51.59 | Recall = 50.44 | F1 = 49.25 | examples = 18505 | valid time = 378.75 (s) ]
+03/28/2021 08:40:36 PM: [ train: Epoch 184 | perplexity = 1.06 | ml_loss = 0.78 | Time for epoch = 671.53 (s) ]
+03/28/2021 08:46:56 PM: [ dev valid official: Epoch = 184 | bleu = 32.88 | rouge_l = 47.57 | Precision = 51.43 | Recall = 50.36 | F1 = 49.12 | examples = 18505 | valid time = 375.14 (s) ]
+03/28/2021 08:57:14 PM: [ train: Epoch 185 | perplexity = 1.07 | ml_loss = 0.79 | Time for epoch = 618.14 (s) ]
+03/28/2021 09:03:22 PM: [ dev valid official: Epoch = 185 | bleu = 32.80 | rouge_l = 47.52 | Precision = 51.52 | Recall = 50.14 | F1 = 49.07 | examples = 18505 | valid time = 363.08 (s) ]
+03/28/2021 09:13:38 PM: [ train: Epoch 186 | perplexity = 1.06 | ml_loss = 0.78 | Time for epoch = 616.67 (s) ]
+03/28/2021 09:19:52 PM: [ dev valid official: Epoch = 186 | bleu = 32.73 | rouge_l = 47.37 | Precision = 51.07 | Recall = 50.27 | F1 = 48.93 | examples = 18505 | valid time = 369.16 (s) ]
+03/28/2021 09:30:48 PM: [ train: Epoch 187 | perplexity = 1.06 | ml_loss = 0.78 | Time for epoch = 655.46 (s) ]
+03/28/2021 09:37:02 PM: [ dev valid official: Epoch = 187 | bleu = 32.81 | rouge_l = 47.65 | Precision = 51.17 | Recall = 50.74 | F1 = 49.21 | examples = 18505 | valid time = 369.43 (s) ]
+03/28/2021 09:48:16 PM: [ train: Epoch 188 | perplexity = 1.06 | ml_loss = 0.76 | Time for epoch = 673.86 (s) ]
+03/28/2021 09:54:32 PM: [ dev valid official: Epoch = 188 | bleu = 32.86 | rouge_l = 47.66 | Precision = 51.56 | Recall = 50.44 | F1 = 49.24 | examples = 18505 | valid time = 371.19 (s) ]
+03/28/2021 10:05:13 PM: [ train: Epoch 189 | perplexity = 1.06 | ml_loss = 0.76 | Time for epoch = 641.59 (s) ]
+03/28/2021 10:11:34 PM: [ dev valid official: Epoch = 189 | bleu = 32.96 | rouge_l = 47.55 | Precision = 51.43 | Recall = 50.24 | F1 = 49.09 | examples = 18505 | valid time = 376.70 (s) ]
+03/28/2021 10:21:59 PM: [ train: Epoch 190 | perplexity = 1.06 | ml_loss = 0.74 | Time for epoch = 625.15 (s) ]
+03/28/2021 10:28:09 PM: [ dev valid official: Epoch = 190 | bleu = 32.91 | rouge_l = 47.71 | Precision = 51.82 | Recall = 50.28 | F1 = 49.26 | examples = 18505 | valid time = 365.15 (s) ]
+03/28/2021 10:38:33 PM: [ train: Epoch 191 | perplexity = 1.06 | ml_loss = 0.74 | Time for epoch = 623.81 (s) ]
+03/28/2021 10:44:45 PM: [ dev valid official: Epoch = 191 | bleu = 32.79 | rouge_l = 47.53 | Precision = 51.11 | Recall = 50.53 | F1 = 49.07 | examples = 18505 | valid time = 367.87 (s) ]
+03/28/2021 10:54:41 PM: [ train: Epoch 192 | perplexity = 1.06 | ml_loss = 0.74 | Time for epoch = 596.17 (s) ]
+03/28/2021 11:00:58 PM: [ dev valid official: Epoch = 192 | bleu = 32.88 | rouge_l = 47.60 | Precision = 51.94 | Recall = 50.07 | F1 = 49.18 | examples = 18505 | valid time = 372.29 (s) ]
+03/28/2021 11:11:27 PM: [ train: Epoch 193 | perplexity = 1.06 | ml_loss = 0.73 | Time for epoch = 628.98 (s) ]
+03/28/2021 11:17:37 PM: [ dev valid official: Epoch = 193 | bleu = 32.87 | rouge_l = 47.63 | Precision = 51.64 | Recall = 50.31 | F1 = 49.20 | examples = 18505 | valid time = 365.15 (s) ]
+03/28/2021 11:28:00 PM: [ train: Epoch 194 | perplexity = 1.06 | ml_loss = 0.72 | Time for epoch = 622.65 (s) ]
+03/28/2021 11:34:10 PM: [ dev valid official: Epoch = 194 | bleu = 32.80 | rouge_l = 47.56 | Precision = 51.35 | Recall = 50.43 | F1 = 49.14 | examples = 18505 | valid time = 365.72 (s) ]
+03/28/2021 11:44:55 PM: [ train: Epoch 195 | perplexity = 1.06 | ml_loss = 0.72 | Time for epoch = 644.93 (s) ]
+03/28/2021 11:51:05 PM: [ dev valid official: Epoch = 195 | bleu = 32.73 | rouge_l = 47.49 | Precision = 51.06 | Recall = 50.49 | F1 = 49.03 | examples = 18505 | valid time = 364.97 (s) ]
+03/29/2021 12:01:19 AM: [ train: Epoch 196 | perplexity = 1.06 | ml_loss = 0.71 | Time for epoch = 614.14 (s) ]
+03/29/2021 12:07:27 AM: [ dev valid official: Epoch = 196 | bleu = 32.79 | rouge_l = 47.55 | Precision = 51.23 | Recall = 50.50 | F1 = 49.10 | examples = 18505 | valid time = 363.44 (s) ]
+03/29/2021 12:17:39 AM: [ train: Epoch 197 | perplexity = 1.06 | ml_loss = 0.71 | Time for epoch = 611.92 (s) ]
+03/29/2021 12:23:52 AM: [ dev valid official: Epoch = 197 | bleu = 33.03 | rouge_l = 47.73 | Precision = 51.67 | Recall = 50.48 | F1 = 49.31 | examples = 18505 | valid time = 368.09 (s) ]
+03/29/2021 12:23:52 AM: [ Best valid: bleu = 33.03 (epoch 197, 341992 updates) ]
+03/29/2021 12:34:04 AM: [ train: Epoch 198 | perplexity = 1.06 | ml_loss = 0.70 | Time for epoch = 609.35 (s) ]
+03/29/2021 12:40:15 AM: [ dev valid official: Epoch = 198 | bleu = 32.92 | rouge_l = 47.61 | Precision = 51.45 | Recall = 50.44 | F1 = 49.19 | examples = 18505 | valid time = 365.86 (s) ]
+03/29/2021 12:51:37 AM: [ train: Epoch 199 | perplexity = 1.06 | ml_loss = 0.70 | Time for epoch = 682.26 (s) ]
+03/29/2021 12:57:44 AM: [ dev valid official: Epoch = 199 | bleu = 32.87 | rouge_l = 47.64 | Precision = 51.58 | Recall = 50.40 | F1 = 49.19 | examples = 18505 | valid time = 362.90 (s) ]
+03/29/2021 01:08:15 AM: [ train: Epoch 200 | perplexity = 1.06 | ml_loss = 0.69 | Time for epoch = 630.48 (s) ]
+03/29/2021 01:14:28 AM: [ dev valid official: Epoch = 200 | bleu = 32.96 | rouge_l = 47.54 | Precision = 51.53 | Recall = 50.22 | F1 = 49.11 | examples = 18505 | valid time = 368.66 (s) ]
